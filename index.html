@@ -50,5 +50,32 @@
   <div id="root"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/ringtone.js?v=1"></script>
+
+<style id="location-share-style">.location-share-button{width:38px;height:38px;flex:0 0 38px;border:0;background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;font-size:20px}.location-share-button:hover{color:#1bdcff}.location-share-button:disabled{opacity:.45}@media(max-width:680px){.location-share-button{width:34px;flex-basis:34px}}</style>
+<script id="location-share-script">
+(function(){
+ function addLocationButton(){
+  document.querySelectorAll(".composer").forEach(function(composer){
+   if(composer.querySelector(".location-share-button"))return;
+   var field=composer.querySelector("input[placeholder=\"Escreva uma mensagem...\"]");
+   if(!field)return;
+   var button=document.createElement("button");
+   button.type="button";button.className="location-share-button";button.setAttribute("aria-label","Compartilhar localização");button.title="Compartilhar localização";button.textContent="⌖";
+   button.addEventListener("click",function(){
+    if(!navigator.geolocation){alert("Este aparelho não permite acessar a localização.");return;}
+    button.disabled=true;button.textContent="…";
+    navigator.geolocation.getCurrentPosition(function(pos){
+     var lat=pos.coords.latitude.toFixed(6),lng=pos.coords.longitude.toFixed(6);
+     var text="📍 Minha localização: https://www.google.com/maps?q="+lat+","+lng;
+     var setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value").set;setter.call(field,text);field.dispatchEvent(new Event("input",{bubbles:true}));
+     setTimeout(function(){var send=composer.querySelector("button.send");if(send)send.click();button.disabled=false;button.textContent="⌖";},180);
+    },function(err){button.disabled=false;button.textContent="⌖";alert(err.code===1?"Para enviar sua localização, permita o acesso nas configurações do navegador.":"Não foi possível obter sua localização agora.");},{enableHighAccuracy:true,timeout:12000,maximumAge:30000});
+   });
+   composer.insertBefore(button,field);
+  });
+ }
+ new MutationObserver(addLocationButton).observe(document.documentElement,{childList:true,subtree:true});addLocationButton();
+})();
+</script>
 </body>
 </html>
