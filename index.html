@@ -98,5 +98,26 @@
  new MutationObserver(addCameraButton).observe(document.documentElement,{childList:true,subtree:true});addCameraButton();
 })();
 </script>
+
+<style id="camera-mode-fix-style">.camera-mode-menu{z-index:9999;position:fixed;left:50%;bottom:150px;transform:translateX(-50%);display:flex;gap:8px;padding:10px;background:#0b1320;border:1px solid #ffffff22;border-radius:16px;box-shadow:0 14px 40px #000b}.camera-mode-menu button{width:auto!important;height:44px!important;padding:0 14px!important;border-radius:12px!important;background:#162235!important;color:#fff!important;font-weight:700}.camera-mode-menu button:first-child{background:#16cde8!important;color:#031017!important}</style>
+<script id="camera-mode-fix-script">
+(function(){
+ function install(){
+  document.querySelectorAll(".composer").forEach(function(composer){
+   var old=composer.querySelector(".camera-share-button");if(!old||old.dataset.modeFix)return;
+   var button=old.cloneNode(true);button.dataset.modeFix="1";old.replaceWith(button);
+   button.addEventListener("click",function(){
+    var previous=document.querySelector(".camera-mode-menu");if(previous)previous.remove();
+    var menu=document.createElement("div");menu.className="camera-mode-menu";
+    function openCamera(type){var input=composer.querySelector("input[type=\"file\"].attachment-file");if(!input)return;menu.remove();input.setAttribute("accept",type==="photo"?"image/*":"video/*");input.setAttribute("capture","environment");var restore=function(){setTimeout(function(){input.setAttribute("accept","image/*,video/*");input.removeAttribute("capture");},300);input.removeEventListener("change",restore)};input.addEventListener("change",restore);input.click()}
+    var photo=document.createElement("button");photo.type="button";photo.textContent="📷 Tirar foto";photo.onclick=function(){openCamera("photo")};
+    var video=document.createElement("button");video.type="button";video.textContent="🎥 Gravar vídeo";video.onclick=function(){openCamera("video")};
+    menu.append(photo,video);document.body.appendChild(menu);
+   });
+  });
+ }
+ new MutationObserver(install).observe(document.documentElement,{childList:true,subtree:true});install();
+})();
+</script>
 </body>
 </html>
