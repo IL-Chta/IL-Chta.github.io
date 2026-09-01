@@ -77,5 +77,26 @@
  new MutationObserver(addLocationButton).observe(document.documentElement,{childList:true,subtree:true});addLocationButton();
 })();
 </script>
+
+<style id="camera-share-style">.camera-share-button{width:38px;height:38px;flex:0 0 38px;border:0;background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;font-size:20px}.camera-share-button:hover{color:#1bdcff}@media(max-width:680px){.camera-share-button{width:34px;flex-basis:34px}}</style>
+<script id="camera-share-script">
+(function(){
+ function addCameraButton(){
+  document.querySelectorAll(".composer").forEach(function(composer){
+   if(composer.querySelector(".camera-share-button"))return;
+   var fileInput=composer.querySelector("input[type=\"file\"].attachment-file");
+   var attach=fileInput&&fileInput.closest("label");
+   if(!fileInput||!attach)return;
+   var button=document.createElement("button");button.type="button";button.className="camera-share-button";button.setAttribute("aria-label","Abrir câmera para foto ou vídeo");button.title="Foto ou vídeo";button.textContent="📷";
+   button.addEventListener("click",function(){
+    fileInput.setAttribute("accept","image/*,video/*");fileInput.setAttribute("capture","environment");fileInput.click();
+    setTimeout(function(){fileInput.setAttribute("accept","image/*,video/*");fileInput.removeAttribute("capture");},1800);
+   });
+   attach.insertAdjacentElement("afterend",button);
+  });
+ }
+ new MutationObserver(addCameraButton).observe(document.documentElement,{childList:true,subtree:true});addCameraButton();
+})();
+</script>
 </body>
 </html>
