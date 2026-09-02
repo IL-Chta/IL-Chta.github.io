@@ -37,6 +37,22 @@
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-97NMYJ4EGZ"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-97NMYJ4EGZ");</script>
+  <script id="preserve-contact-invite">
+  (function(){
+    var key="ilchats-pending-contact";
+    var params=new URLSearchParams(location.search);
+    var contact=(params.get("contato")||"").trim().replace(/^@/,"");
+    if(contact){
+      localStorage.setItem(key,contact);
+      return;
+    }
+    var pending=localStorage.getItem(key);
+    if(pending){
+      params.set("contato",pending);
+      history.replaceState(null,"",location.pathname+"?"+params.toString()+location.hash);
+    }
+  })();
+  </script>
   <script type="module" crossorigin src="/assets/index-Dvj0lM6F.js?v=contatos-20260902-9"></script>
   
   <link rel="stylesheet" crossorigin href="/assets/index-CtQnR9aj.css">
