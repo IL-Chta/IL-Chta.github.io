@@ -1,0 +1,78 @@
+(function () {
+  "use strict";
+
+  var originalFetch = window.fetch.bind(window);
+  var callKinds = {};
+  var callStartedAt = {};
+
+  function durationText(startedAt) {
+    if (!startedAt) return "";
+    var seconds = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
+    if (seconds < 60) return seconds + " s";
+    var minutes = Math.floor(seconds / 60);
+    var remainder = seconds % 60;
+    return minutes + " min" + (remainder ? " " + remainder + " s" : "");
+  }
+
+  function historyText(signal) {
+    var payload = signal.payload || {};
+    var kind = payload.mode || callKinds[signal.call_id] || "audio";
+    var label = kind === "video" ? "🎥 Chamada de vídeo" : "📞 Chamada de voz";
+
+    if (signal.signal_type === "offer") {
+      callKinds[signal.call_id] = kind;
+      callStartedAt[signal.call_id] = Date.now();
+      return label + " iniciada";
+    }
+
+    if (signal.signal_type !== "hangup") return "";
+    if (payload.reason === "rejected") return label + " não atendida";
+    var duration = durationText(callStartedAt[signal.call_id]);
+    return label + " encerrada" + (duration ? " · " + duration : "");
+  }
+
+  async function addHistory(signal, headers) {
+    var body = historyText(signal);
+    if (!body || !signal.conversation_id || !signal.sender_id) return;
+
+    var authorization = headers.get("authorization");
+    var apikey = headers.get("apikey");
+    if (!authorization || !apikey) return;
+
+    await originalFetch("https://ngidsolvxegpyrprlbex.supabase.co/rest/v1/messages", {
+      method: "POST",
+      headers: {
+        "Authorization": authorization,
+        "apikey": apikey,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        conversation_id: signal.conversation_id,
+        sender_id: signal.sender_id,
+        body: body
+      })
+    });
+  }
+
+  window.fetch = async function (input, init) {
+    var response = await originalFetch(input, init);
+    try {
+      var url = typeof input === "string" ? input : input.url;
+      var method = String((init && init.method) || (input && input.method) || "GET").toUpperCase();
+      if (!response.ok || method !== "POST" || !url.includes("/rest/v1/call_signals")) return response;
+
+      var rawBody = init && init.body;
+      if (!rawBody) return response;
+      var parsed = JSON.parse(rawBody);
+      var signals = Array.isArray(parsed) ? parsed : [parsed];
+      var headers = new Headers((init && init.headers) || (input && input.headers) || {});
+      signals.forEach(function (signal) {
+        if (signal.signal_type === "offer" || signal.signal_type === "hangup") {
+          addHistory(signal, headers).catch(function () {});
+        }
+      });
+    } catch (_) {}
+    return response;
+  };
+})();
