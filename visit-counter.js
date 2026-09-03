@@ -1,7 +1,10 @@
 (function () {
   "use strict";
 
-  var GEO_ENDPOINT = "https://ipwho.is/?fields=success,country_code,country,region,city";
+  var GEO_ENDPOINTS = [
+    "https://ipwho.is/?fields=success,country_code,country,region,city",
+    "https://ipapi.co/json/"
+  ];
   var VISIT_MARKER = "ilchats-visit-recorded-v1";
   var SUPABASE_URL = "https://ngidsolvxegpyrprlbex.supabase.co";
   var SUPABASE_KEY = "sb_publishable_-8u67PtkHJj1yRVWtOIkog_2skdsDcz";
@@ -31,25 +34,58 @@
     );
   }
 
-  async function recordVisit() {
-    if (sessionStorage.getItem(VISIT_MARKER)) return;
-    sessionStorage.setItem(VISIT_MARKER, "1");
+  async function locateVisit() {
+    var lastError;
+    for (var i = 0; i < GEO_ENDPOINTS.length; i += 1) {
+      try {
+        var response = await fetch(GEO_ENDPOINTS[i], { cache: "no-store" });
+        if (!response.ok) throw new Error("Localização indisponível");
+        var data = await response.json();
+        var code = data.country_code || data.countryCode;
+        if (data.success === false || !code) throw new Error("Localização incompleta");
+        return {
+          country_code: code,
+          country: data.country_name || data.country,
+          region: data.region || data.region_name,
+          city: data.city
+        };
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError || new Error("Localização indisponível");
+  }
 
-    try {
-      var response = await fetch(GEO_ENDPOINT, { cache: "no-store" });
-      var geo = await response.json();
-      var client = getClient();
-      if (!geo.success || !client) throw new Error("Localização indisponível");
-
-      var result = await client.rpc("record_visit", {
+  async function sendVisit(geo) {
+    var response = await fetch(SUPABASE_URL + "/rest/v1/rpc/record_visit", {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
         p_country_code: text(geo.country_code, ""),
         p_country: text(geo.country, "Desconhecido"),
         p_region: text(geo.region, "Desconhecido"),
         p_city: text(geo.city, "Desconhecida")
-      });
-      if (result.error) throw result.error;
-    } catch (_) {
-      sessionStorage.removeItem(VISIT_MARKER);
+      })
+    });
+    if (!response.ok) throw new Error("Não foi possível registrar a visita");
+  }
+
+  async function recordVisit() {
+    try {
+      if (sessionStorage.getItem(VISIT_MARKER)) return;
+      sessionStorage.setItem(VISIT_MARKER, "1");
+    } catch (_) {}
+
+    try {
+      var geo = await locateVisit();
+      await sendVisit(geo);
+    } catch (error) {
+      try { sessionStorage.removeItem(VISIT_MARKER); } catch (_) {}
+      console.warn("IL Chats: contador de visitas temporariamente indisponível.", error);
     }
   }
 
