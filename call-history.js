@@ -14,9 +14,9 @@
     return minutes + " min" + (remainder ? " " + remainder + " s" : "");
   }
 
-  function historyText(signal) {
+  function historyText(signal, answered, savedMode) {
     var payload = signal.payload || {};
-    var kind = payload.mode || callKinds[signal.call_id] || "audio";
+    var kind = payload.mode || savedMode || callKinds[signal.call_id] || "audio";
     var label = kind === "video" ? "🎥 Chamada de vídeo" : "📞 Chamada de voz";
 
     if (signal.signal_type === "offer") {
@@ -26,13 +26,31 @@
     }
 
     if (signal.signal_type !== "hangup") return "";
-    if (payload.reason === "rejected") return label + " não atendida";
+    if (payload.reason === "rejected" || answered === false) return label + " não atendida";
     var duration = durationText(callStartedAt[signal.call_id]);
     return label + " encerrada" + (duration ? " · " + duration : "");
   }
 
+  async function callInfo(signal, headers) {
+    if (signal.signal_type !== "hangup") return { answered: null, mode: "" };
+    var url = "https://ngidsolvxegpyrprlbex.supabase.co/rest/v1/call_signals" +
+      "?select=signal_type,payload&call_id=eq." + encodeURIComponent(signal.call_id) +
+      "&signal_type=in.(offer,answer)";
+    var response = await originalFetch(url, {
+      headers: { Authorization: headers.get("authorization"), apikey: headers.get("apikey") }
+    });
+    if (!response.ok) return { answered: null, mode: "" };
+    var rows = await response.json();
+    var offer = (rows || []).find(function (row) { return row.signal_type === "offer"; });
+    return {
+      answered: (rows || []).some(function (row) { return row.signal_type === "answer"; }),
+      mode: offer && offer.payload && offer.payload.mode || ""
+    };
+  }
+
   async function addHistory(signal, headers) {
-    var body = historyText(signal);
+    var info = await callInfo(signal, headers);
+    var body = historyText(signal, info.answered, info.mode);
     if (!body || !signal.conversation_id || !signal.sender_id) return;
 
     var authorization = headers.get("authorization");
