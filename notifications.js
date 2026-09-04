@@ -33,6 +33,47 @@
     return result.data && result.data.display_name || "Alguém";
   }
 
+  function makeDraggable(element) {
+    var startX = 0, startY = 0, originX = 0, originY = 0, dragging = false, moved = false;
+    try {
+      var saved = JSON.parse(localStorage.getItem("ilchats-notification-button-position") || "null");
+      if (saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)) {
+        element.style.left = Math.min(saved.left, innerWidth - 80) + "px";
+        element.style.top = Math.min(saved.top, innerHeight - 50) + "px";
+        element.style.right = "auto";
+        element.style.bottom = "auto";
+      }
+    } catch (_) {}
+    element.addEventListener("pointerdown", function (event) {
+      var rect = element.getBoundingClientRect();
+      startX = event.clientX; startY = event.clientY;
+      originX = rect.left; originY = rect.top;
+      dragging = true; moved = false;
+      element.setPointerCapture(event.pointerId);
+    });
+    element.addEventListener("pointermove", function (event) {
+      if (!dragging) return;
+      var dx = event.clientX - startX, dy = event.clientY - startY;
+      if (Math.abs(dx) + Math.abs(dy) < 7) return;
+      moved = true;
+      var left = Math.max(6, Math.min(originX + dx, innerWidth - element.offsetWidth - 6));
+      var top = Math.max(6, Math.min(originY + dy, innerHeight - element.offsetHeight - 6));
+      element.style.left = left + "px"; element.style.top = top + "px";
+      element.style.right = "auto"; element.style.bottom = "auto";
+    });
+    element.addEventListener("pointerup", function () {
+      dragging = false;
+      if (moved) {
+        var rect = element.getBoundingClientRect();
+        localStorage.setItem("ilchats-notification-button-position", JSON.stringify({ left: rect.left, top: rect.top }));
+        setTimeout(function () { moved = false; }, 0);
+      }
+    });
+    element.addEventListener("click", function (event) {
+      if (moved) { event.preventDefault(); event.stopImmediatePropagation(); }
+    }, true);
+  }
+
   async function onMessage(row) {
     if (!row || row.sender_id === user.id || seen.has("m:" + row.id)) return;
     seen.add("m:" + row.id);
@@ -65,6 +106,7 @@
       } else b.textContent = "Avisos bloqueados";
     };
     document.body.appendChild(b);
+    makeDraggable(b);
   }
 
   async function start() {
