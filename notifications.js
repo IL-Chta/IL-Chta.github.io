@@ -33,7 +33,7 @@
     return result.data && result.data.display_name || "Alguém";
   }
 
-  function makeDraggable(element) {
+  function makeDraggable(element, activate) {
     var startX = 0, startY = 0, originX = 0, originY = 0, dragging = false, moved = false;
     try {
       var saved = JSON.parse(localStorage.getItem("ilchats-notification-button-position") || "null");
@@ -54,7 +54,7 @@
     element.addEventListener("pointermove", function (event) {
       if (!dragging) return;
       var dx = event.clientX - startX, dy = event.clientY - startY;
-      if (Math.abs(dx) + Math.abs(dy) < 7) return;
+      if (Math.abs(dx) + Math.abs(dy) < 18) return;
       moved = true;
       var left = Math.max(6, Math.min(originX + dx, innerWidth - element.offsetWidth - 6));
       var top = Math.max(6, Math.min(originY + dy, innerHeight - element.offsetHeight - 6));
@@ -66,12 +66,12 @@
       if (moved) {
         var rect = element.getBoundingClientRect();
         localStorage.setItem("ilchats-notification-button-position", JSON.stringify({ left: rect.left, top: rect.top }));
-        setTimeout(function () { moved = false; }, 0);
-      }
+        moved = false;
+      } else activate();
     });
-    element.addEventListener("click", function (event) {
-      if (moved) { event.preventDefault(); event.stopImmediatePropagation(); }
-    }, true);
+    element.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activate(); }
+    });
   }
 
   async function onMessage(row) {
@@ -98,15 +98,28 @@
     b.type = "button";
     b.className = "il-enable-notifications";
     b.textContent = "🔔 Ativar avisos";
-    b.onclick = async function () {
-      var permission = await Notification.requestPermission();
-      if (permission === "granted") {
-        b.remove();
-        await show("Avisos ativados", "O IL Chats poderá avisar sobre mensagens e ligações.", false, "notifications-ready");
-      } else b.textContent = "Avisos bloqueados";
-    };
+    var activating = false;
+    async function activate() {
+      if (activating) return;
+      activating = true;
+      b.textContent = "🔔 Permita no navegador…";
+      try {
+        var permission = await Notification.requestPermission();
+        if (permission === "granted") {
+          await show("Avisos ativados", "O IL Chats poderá avisar sobre mensagens e ligações.", false, "notifications-ready");
+          b.remove();
+        } else {
+          b.textContent = "🔕 Avisos bloqueados";
+          alert("Os avisos estão bloqueados. Clique no cadeado ao lado do endereço do IL Chats e permita as notificações.");
+        }
+      } catch (_) {
+        b.textContent = "🔔 Tentar ativar novamente";
+        alert("O navegador não conseguiu abrir a autorização. Tente pelo IL Chats instalado ou pelo navegador normal.");
+      }
+      activating = false;
+    }
     document.body.appendChild(b);
-    makeDraggable(b);
+    makeDraggable(b, activate);
   }
 
   async function start() {
