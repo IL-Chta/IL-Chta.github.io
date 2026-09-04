@@ -119,7 +119,7 @@
       activating = false;
     }
     document.body.appendChild(b);
-    makeDraggable(b, activate);
+    b.addEventListener("click", activate);
   }
 
   async function start() {
