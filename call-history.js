@@ -14,10 +14,16 @@
     return minutes + " min" + (remainder ? " " + remainder + " s" : "");
   }
 
-  function historyText(signal) {
+  function callLabel(signal, mode) {
     var payload = signal.payload || {};
-    var kind = payload.mode || callKinds[signal.call_id] || "audio";
-    var label = kind === "video" ? "🎥 Chamada de vídeo" : "📞 Chamada de voz";
+    var kind = payload.mode || mode || callKinds[signal.call_id] || "audio";
+    return kind === "video" ? "🎥 Chamada de vídeo" : "📞 Chamada de voz";
+  }
+
+  function historyText(signal, info) {
+    var payload = signal.payload || {};
+    var kind = payload.mode || info.mode || callKinds[signal.call_id] || "audio";
+    var label = callLabel(signal, kind);
 
     if (signal.signal_type === "offer") {
       callKinds[signal.call_id] = kind;
@@ -26,13 +32,34 @@
     }
 
     if (signal.signal_type !== "hangup") return "";
-    if (payload.reason === "rejected") return label + " não atendida";
+    if (payload.reason === "rejected" || info.answered === false) return label + " não atendida";
     var duration = durationText(callStartedAt[signal.call_id]);
     return label + " encerrada" + (duration ? " · " + duration : "");
   }
 
+  async function callInfo(signal, headers) {
+    if (signal.signal_type !== "hangup") return { answered: null, mode: "" };
+    var authorization = headers.get("authorization");
+    var apikey = headers.get("apikey");
+    if (!authorization || !apikey) return { answered: null, mode: "" };
+    var url = "https://ngidsolvxegpyrprlbex.supabase.co/rest/v1/call_signals" +
+      "?select=signal_type,payload&call_id=eq." + encodeURIComponent(signal.call_id) +
+      "&signal_type=in.(offer,answer)";
+    var response = await originalFetch(url, {
+      headers: { Authorization: authorization, apikey: apikey }
+    });
+    if (!response.ok) return { answered: null, mode: "" };
+    var rows = await response.json();
+    var offer = (rows || []).find(function (row) { return row.signal_type === "offer"; });
+    return {
+      answered: (rows || []).some(function (row) { return row.signal_type === "answer"; }),
+      mode: offer && offer.payload && offer.payload.mode || ""
+    };
+  }
+
   async function addHistory(signal, headers) {
-    var body = historyText(signal);
+    var info = await callInfo(signal, headers);
+    var body = historyText(signal, info);
     if (!body || !signal.conversation_id || !signal.sender_id) return;
 
     var authorization = headers.get("authorization");
