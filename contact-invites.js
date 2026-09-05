@@ -2,7 +2,7 @@
   "use strict";
   var URL = "https://ngidsolvxegpyrprlbex.supabase.co";
   var KEY = "sb_publishable_-8u67PtkHJj1yRVWtOIkog_2skdsDcz";
-  var db, userId = "", busy = false;
+  var db, userId = "", busy = false, sharedBusy = false;
 
   function client() {
     if (db) return db;
@@ -15,6 +15,80 @@
 
   function clear() {
     document.querySelectorAll(".il-contact-invite").forEach(function (item) { item.remove(); });
+  }
+
+  function sharedUsername() {
+    return (new URLSearchParams(location.search).get("contato") || "")
+      .trim().replace(/^@/, "");
+  }
+
+  async function addSharedContact() {
+    var username = sharedUsername();
+    if (!username || sharedBusy) return;
+    sharedBusy = true;
+    try {
+      var c = client();
+      if (!c) return;
+      var auth = await c.auth.getUser();
+      var user = auth.data && auth.data.user;
+      if (!user) return;
+
+      var profile = await c.from("profiles")
+        .select("id,display_name,username")
+        .ilike("username", username)
+        .maybeSingle();
+      if (profile.error || !profile.data || profile.data.id === user.id) return;
+
+      var target = profile.data;
+      var relations = await c.from("friendships")
+        .select("requester_id,addressee_id,status")
+        .or("and(requester_id.eq." + user.id + ",addressee_id.eq." + target.id + "),and(requester_id.eq." + target.id + ",addressee_id.eq." + user.id + ")");
+      if (relations.error) return;
+
+      var accepted = (relations.data || []).find(function (item) { return item.status === "accepted"; });
+      if (accepted) return;
+      var pending = (relations.data || []).find(function (item) { return item.status === "pending"; });
+
+      clear();
+      var box = document.createElement("div");
+      box.className = "il-contact-invite il-shared-contact";
+      var name = target.display_name || ("@" + target.username);
+      box.innerHTML = '<span><b>👤 ' + escapeText(name) + '</b><small>enviou o link de contato</small></span>' +
+        '<button type="button">Adicionar contato</button><button type="button" class="later">Depois</button>';
+      var buttons = box.querySelectorAll("button");
+      buttons[0].onclick = async function () {
+        buttons[0].disabled = true;
+        buttons[0].textContent = "Adicionando…";
+        var result;
+        if (pending) {
+          result = await c.from("friendships")
+            .update({ status: "accepted", updated_at: new Date().toISOString() })
+            .eq("requester_id", pending.requester_id)
+            .eq("addressee_id", pending.addressee_id)
+            .eq("status", "pending");
+        } else {
+          result = await c.from("friendships").insert({
+            requester_id: user.id,
+            addressee_id: target.id,
+            status: "accepted"
+          });
+        }
+        if (result.error) {
+          buttons[0].disabled = false;
+          buttons[0].textContent = "Adicionar contato";
+          alert("Não foi possível adicionar agora: " + result.error.message);
+          return;
+        }
+        localStorage.removeItem("ilchats-pending-contact");
+        history.replaceState(null, "", location.pathname + location.hash);
+        clear();
+        location.reload();
+      };
+      buttons[1].onclick = function () { box.remove(); };
+      document.body.appendChild(box);
+    } finally {
+      sharedBusy = false;
+    }
   }
 
   async function accept(invite, button) {
@@ -81,6 +155,7 @@
   }
 
   window.addEventListener("load", function () {
+    setTimeout(addSharedContact, 1200);
     setTimeout(check, 1800);
     setInterval(check, 12000);
   });
