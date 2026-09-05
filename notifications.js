@@ -111,6 +111,7 @@
         } else {
           b.textContent = "🔕 Avisos bloqueados";
           alert("Os avisos estão bloqueados. Clique no cadeado ao lado do endereço do IL Chats e permita as notificações.");
+          b.remove();
         }
       } catch (_) {
         b.textContent = "🔔 Tentar ativar novamente";
