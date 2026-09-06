@@ -1,10 +1,7 @@
 (() => {
   let audioContext = null;
   let timer = null;
-  let limitTimer = null;
   let ringing = false;
-  let currentCall = null;
-  const expiredCalls = new WeakSet();
   const unlockAudio = () => {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
@@ -28,29 +25,26 @@
       oscillator.stop(start + offset + 0.2);
     });
   };
-  const stopRinging = () => {
-    ringing = false;
-    if (timer) clearInterval(timer);
-    if (limitTimer) clearTimeout(limitTimer);
-    timer = null; limitTimer = null;
-    if (navigator.vibrate) navigator.vibrate(0);
-  };
-  const startRinging = (call) => {
-    if (ringing || expiredCalls.has(call)) return;
-    ringing = true; currentCall = call; playPattern();
-    timer = setInterval(playPattern, 2100);
-    limitTimer = setTimeout(() => { expiredCalls.add(call); stopRinging(); }, 45000);
+  const startRinging = () => {
+    if (ringing) return;
+    ringing = true;
+    playPattern();
+    timer = window.setInterval(playPattern, 2100);
     if (navigator.vibrate) navigator.vibrate([600, 300, 600, 600]);
   };
+  const stopRinging = () => {
+    if (!ringing) return;
+    ringing = false;
+    if (timer) window.clearInterval(timer);
+    timer = null;
+    if (navigator.vibrate) navigator.vibrate(0);
+  };
   const check = () => {
-    const call = document.querySelector(".incoming-call");
-    if (!call) { currentCall = null; stopRinging(); return; }
-    if (call !== currentCall) { stopRinging(); currentCall = call; }
-    startRinging(call);
+    if (document.querySelector(".incoming-call")) startRinging();
+    else stopRinging();
   };
   document.addEventListener("pointerdown", unlockAudio, { passive: true });
   document.addEventListener("keydown", unlockAudio);
-  window.addEventListener("pagehide", stopRinging);
   new MutationObserver(check).observe(document.documentElement, { childList: true, subtree: true });
   check();
 })();

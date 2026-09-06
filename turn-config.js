@@ -37,7 +37,6 @@
       iceCandidatePoolSize: 10
     }));
     activeConnections.add(connection);
-    window.__ilActivePeerConnection = connection;
     connection.addEventListener("connectionstatechange", function () {
       if (connection.connectionState === "closed") activeConnections.delete(connection);
     });

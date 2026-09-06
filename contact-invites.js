@@ -39,15 +39,53 @@
         .maybeSingle();
       if (profile.error || !profile.data || profile.data.id === user.id) return;
 
-      var result = await c.rpc("accept_contact_link", { p_username: profile.data.username });
-      if (result.error) {
-        alert("Não foi possível adicionar este contato agora: " + result.error.message);
-        return;
-      }
-      localStorage.removeItem("ilchats-pending-contact");
-      history.replaceState(null, "", location.pathname + location.hash);
+      var target = profile.data;
+      var relations = await c.from("friendships")
+        .select("requester_id,addressee_id,status")
+        .or("and(requester_id.eq." + user.id + ",addressee_id.eq." + target.id + "),and(requester_id.eq." + target.id + ",addressee_id.eq." + user.id + ")");
+      if (relations.error) return;
+
+      var accepted = (relations.data || []).find(function (item) { return item.status === "accepted"; });
+      if (accepted) return;
+      var pending = (relations.data || []).find(function (item) { return item.status === "pending"; });
+
       clear();
-      location.reload();
+      var box = document.createElement("div");
+      box.className = "il-contact-invite il-shared-contact";
+      var name = target.display_name || ("@" + target.username);
+      box.innerHTML = '<span><b>👤 ' + escapeText(name) + '</b><small>enviou o link de contato</small></span>' +
+        '<button type="button">Adicionar contato</button><button type="button" class="later">Depois</button>';
+      var buttons = box.querySelectorAll("button");
+      buttons[0].onclick = async function () {
+        buttons[0].disabled = true;
+        buttons[0].textContent = "Adicionando…";
+        var result;
+        if (pending) {
+          result = await c.from("friendships")
+            .update({ status: "accepted", updated_at: new Date().toISOString() })
+            .eq("requester_id", pending.requester_id)
+            .eq("addressee_id", pending.addressee_id)
+            .eq("status", "pending");
+        } else {
+          result = await c.from("friendships").insert({
+            requester_id: user.id,
+            addressee_id: target.id,
+            status: "accepted"
+          });
+        }
+        if (result.error) {
+          buttons[0].disabled = false;
+          buttons[0].textContent = "Adicionar contato";
+          alert("Não foi possível adicionar agora: " + result.error.message);
+          return;
+        }
+        localStorage.removeItem("ilchats-pending-contact");
+        history.replaceState(null, "", location.pathname + location.hash);
+        clear();
+        location.reload();
+      };
+      buttons[1].onclick = function () { box.remove(); };
+      document.body.appendChild(box);
     } finally {
       sharedBusy = false;
     }
