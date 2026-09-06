@@ -110,6 +110,8 @@
 
   async function onCall(row) {
     if (!row || row.recipient_id !== user.id || row.signal_type !== "offer" || seen.has("c:" + row.call_id)) return;
+    var age = Date.now() - Date.parse(row.created_at || 0);
+    if (!Number.isFinite(age) || age > 45000) return;
     seen.add("c:" + row.call_id);
     var name = await senderName(row.sender_id);
     var mode = row.payload && row.payload.mode === "video" ? "vídeo" : "voz";
