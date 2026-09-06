@@ -25,13 +25,10 @@
   }
 
   function flag(code) {
-    if (!code || code.length !== 2) return "🌐";
-    return String.fromCodePoint.apply(
-      null,
-      code.toUpperCase().split("").map(function (letter) {
-        return 127397 + letter.charCodeAt(0);
-      })
-    );
+    var countryCode = String(code || "").trim().toLowerCase();
+    if (!/^[a-z]{2}$/.test(countryCode)) return '<span aria-hidden="true">🌐</span>';
+    return '<img src="https://flagcdn.com/32x24/' + countryCode + '.png" ' +
+      'width="32" height="24" alt="Bandeira ' + countryCode.toUpperCase() + '" loading="lazy">';
   }
 
   async function locateVisit() {
