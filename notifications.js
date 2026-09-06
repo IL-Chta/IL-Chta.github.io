@@ -4,6 +4,31 @@
   var KEY = "sb_publishable_-8u67PtkHJj1yRVWtOIkog_2skdsDcz";
   var db, user, channel, registration;
   var seen = new Set();
+  var VAPID_PUBLIC_KEY = "BGq8IGyauun0vKpXPLksb5I_lrhxD89oxschTLQg8kGhKagxDyPOnXd7nTebG796JhAl_SP4KMa68P7Qz2IMp_c";
+
+  function applicationServerKey(value) {
+    var padding = "=".repeat((4 - value.length % 4) % 4);
+    var base64 = (value + padding).replace(/-/g, "+").replace(/_/g, "/");
+    var raw = atob(base64);
+    return Uint8Array.from(raw, function (character) { return character.charCodeAt(0); });
+  }
+
+  async function subscribeForPush() {
+    if (!registration || !user || Notification.permission !== "granted" || !registration.pushManager) return;
+    var subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: applicationServerKey(VAPID_PUBLIC_KEY)
+      });
+    }
+    await client().from("push_subscriptions").upsert({
+      user_id: user.id,
+      endpoint: subscription.endpoint,
+      subscription: subscription.toJSON(),
+      updated_at: new Date().toISOString()
+    }, { onConflict: "endpoint" });
+  }
 
   function client() {
     if (db) return db;
@@ -106,6 +131,7 @@
       try {
         var permission = await Notification.requestPermission();
         if (permission === "granted") {
+          await subscribeForPush();
           await show("Avisos ativados", "O IL Chats poderá avisar sobre mensagens e ligações.", false, "notifications-ready");
           b.remove();
         } else {
@@ -125,12 +151,13 @@
 
   async function start() {
     if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-    registration = await navigator.serviceWorker.register("/sw.js?v=1");
+    registration = await navigator.serviceWorker.register("/sw.js?v=2");
     var c = client();
     if (!c) return;
     var auth = await c.auth.getUser();
     user = auth.data && auth.data.user;
     if (!user) return;
+    if (Notification.permission === "granted") await subscribeForPush();
     button();
     channel = c.channel("il-notifications-" + user.id)
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, function (event) { onMessage(event.new); })
