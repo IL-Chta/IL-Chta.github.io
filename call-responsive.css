@@ -1,0 +1,17 @@
+/* Mantém os controles da videochamada dentro da tela em janelas menores. */
+@media (max-width:900px), (max-height:650px){
+  .call-screen{padding:18px!important}
+  .call-screen>.brand{position:absolute!important;top:16px!important;left:18px!important}
+  .call-controls{position:absolute!important;left:50%!important;bottom:max(18px,env(safe-area-inset-bottom))!important;transform:translateX(-50%)!important;gap:10px!important;white-space:nowrap!important}
+  .call-controls button{flex:0 0 64px!important;width:64px!important;height:64px!important;border-radius:22px!important}
+  .self-video{width:96px!important;height:136px!important;right:14px!important;bottom:94px!important;border-radius:18px!important}
+  .self-video video{border-radius:17px!important}
+}
+@media (max-width:480px){
+  .call-screen{padding:12px!important}
+  .call-screen>.brand{top:12px!important;left:12px!important}
+  .call-controls{bottom:max(12px,env(safe-area-inset-bottom))!important;gap:8px!important}
+  .call-controls button{flex-basis:58px!important;width:58px!important;height:58px!important;border-radius:20px!important}
+  .self-video{width:78px!important;height:110px!important;top:14px!important;right:10px!important;bottom:auto!important;border-radius:16px!important}
+  .self-video video{border-radius:15px!important}
+}
