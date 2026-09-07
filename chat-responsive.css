@@ -19,12 +19,18 @@
   overflow-wrap: anywhere;
 }
 
+.message:has(.message-audio),
+.message:has(audio) {
+  width: min(330px, 88%) !important;
+  max-width: 88% !important;
+}
+
 .message-audio,
 .message audio,
 .message video,
 .message img {
   display: block;
-  width: min(300px, 100%) !important;
+  width: 100% !important;
   max-width: 100% !important;
 }
 
