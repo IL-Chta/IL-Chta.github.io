@@ -21,12 +21,19 @@
 
 .message:has(.message-audio),
 .message:has(audio) {
-  width: min(330px, 88%) !important;
+  width: auto !important;
+  min-width: min(330px, calc(100% - 20px)) !important;
   max-width: 88% !important;
 }
 
 .message-audio,
-.message audio,
+.message audio {
+  display: block;
+  width: clamp(230px, 34vw, 300px) !important;
+  min-width: clamp(230px, 34vw, 300px) !important;
+  max-width: calc(100vw - 120px) !important;
+}
+
 .message video,
 .message img {
   display: block;
@@ -72,6 +79,8 @@
 
   .message-audio,
   .message audio {
-    width: 100% !important;
+    width: clamp(220px, 68vw, 300px) !important;
+    min-width: clamp(220px, 68vw, 300px) !important;
+    max-width: calc(100vw - 92px) !important;
   }
 }
