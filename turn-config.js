@@ -9,7 +9,10 @@
   var iceServers = [
     { urls: "stun:stun.l.google.com:19302" },
     { urls: "stun:stun1.l.google.com:19302" },
-    { urls: "stun:stun.relay.metered.ca:80" }
+    { urls: "stun:stun.relay.metered.ca:80" },
+    { urls: "turn:global.relay.metered.ca:80", username: "debddc575de69bae142e9a8b", credential: "TYzdyA2ctn68KjLO" },
+    { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "debddc575de69bae142e9a8b", credential: "TYzdyA2ctn68KjLO" },
+    { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "debddc575de69bae142e9a8b", credential: "TYzdyA2ctn68KjLO" }
   ];
   var activeConnections = new Set();
 
