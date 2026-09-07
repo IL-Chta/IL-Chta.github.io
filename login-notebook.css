@@ -23,3 +23,18 @@
   .auth-shell{height:100dvh!important;min-height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important}
   .auth-card{height:auto!important;min-height:100dvh!important;overflow:visible!important;padding-bottom:96px!important}
 }
+/* Compacta a entrada em painéis muito estreitos sem cortar controles. */
+@media (max-width:520px){
+  .auth-card{gap:8px!important;padding:12px 14px 30px!important}
+  .auth-card>.login-logo-compact{width:min(100%,240px)!important;height:auto!important;max-height:none!important;margin:0 auto 2px!important;align-self:center!important}
+  .auth-card h2{font-size:25px!important;line-height:1.05!important;margin:0 0 3px!important}
+  .auth-card p{margin:0 0 3px!important;font-size:13px!important;line-height:1.4!important}
+  .google-login{height:44px!important;min-height:44px!important}
+  .auth-card form{gap:7px!important}
+  .field{margin-top:3px!important}
+  .field input{height:40px!important}
+  .forgot{margin-top:-2px!important}
+  .primary{height:44px!important;min-height:44px!important}
+  .switch{margin:3px 0!important;font-size:12px!important}
+  .demo{padding:8px 10px!important;min-height:40px!important}
+}
