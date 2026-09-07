@@ -21,6 +21,7 @@
 /* Uma única rolagem na entrada em celulares e janelas estreitas. */
 @media (max-width:900px){
   .auth-shell{height:100dvh!important;min-height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important}
+  .auth-shell .a2{bottom:0!important}
   .auth-card{height:max-content!important;min-height:100dvh!important;align-self:stretch!important;overflow:visible!important;padding-bottom:96px!important}
 }
 /* Compacta a entrada em painéis muito estreitos sem cortar controles. */
