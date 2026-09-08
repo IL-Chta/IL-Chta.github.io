@@ -1,0 +1,10 @@
+.il-easy-start{background:linear-gradient(135deg,#0b1b2b,#111326);border:1px solid #1bdcff66;border-radius:16px;padding:16px 18px;color:#eef7ff;box-shadow:0 12px 32px #0005}
+.il-easy-start strong{display:block;color:#fff;font-size:17px;margin-bottom:7px}
+.il-easy-start p{margin:0!important;color:#b9c8da!important;font-size:13px!important;line-height:1.55!important}
+.il-easy-start ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px;color:#dcecff;font-size:12px}
+.il-easy-start li:before{content:"✓";color:#31e4a5;font-weight:900;margin-right:8px}
+.il-invite-whatsapp{border:0;border-radius:13px;background:#25d366;color:#03140a;font-weight:900;padding:12px 17px;box-shadow:0 9px 24px #25d36635;cursor:pointer}
+.il-invite-whatsapp:hover{filter:brightness(1.08)}
+.empty-conversation .il-invite-whatsapp{display:block;margin:18px auto 4px}
+.il-invite-help{display:block;margin-top:9px;color:#93a6bb;font-size:11px}
+@media(max-width:680px){.il-easy-start{padding:14px}.il-easy-start strong{font-size:16px}}

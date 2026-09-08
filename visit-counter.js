@@ -148,6 +148,29 @@
     }).join("");
   }
 
+  async function renderAccountCount(section) {
+    var client = getClient();
+    if (!client) return;
+
+    var results = await Promise.all([
+      client.from("profiles").select("id", { count: "exact", head: true }),
+      client.from("visit_events").select("id", { count: "exact", head: true })
+    ]);
+    var accounts = results[0], visits = results[1];
+
+    if (accounts.error || typeof accounts.count !== "number") {
+      section.querySelector(".account-count-number").textContent = "—";
+      section.querySelector(".account-conversion-number").textContent = "—";
+      return;
+    }
+
+    section.querySelector(".account-count-number").textContent = String(accounts.count);
+    var visitCount = !visits.error && typeof visits.count === "number" ? visits.count : 0;
+    section.querySelector(".visit-total-number").textContent = visitCount ? String(visitCount) : "—";
+    section.querySelector(".account-conversion-number").textContent =
+      visitCount ? Math.min(100, (accounts.count / visitCount) * 100).toFixed(1).replace(".", ",") + "%" : "—";
+  }
+
   function installAdminPanel() {
     document.addEventListener("click", function (event) {
       if (!event.target.closest(".profile-admin-button")) return;
@@ -155,14 +178,16 @@
         var card = document.querySelector(".il-tools-card");
         if (!card || card.querySelector(".visit-summary")) return;
         var close = card.querySelector("button");
-        var section = document.createElement("section");
-        section.className = "visit-summary";
-        section.innerHTML =
-          '<div class="visit-summary-head"><h4>Visitas por localização</h4>' +
-          '<span class="visit-live">● TEMPO REAL</span></div>' +
-          '<div class="visit-list"><div class="visit-empty">Carregando visitas…</div></div>';
-        card.insertBefore(section, close);
-        renderVisits(section);
+        var accounts = document.createElement("section");
+        accounts.className = "account-count-summary";
+        accounts.innerHTML =
+          '<h4>O IL Chats está crescendo?</h4><div class="account-numbers">' +
+          '<div><strong class="account-count-number">…</strong><span>Contas cadastradas</span></div>' +
+          '<div><strong class="visit-total-number">…</strong><span>Visitas registradas</span></div>' +
+          '<div><strong class="account-conversion-number">…</strong><span>Visitas que viraram conta</span></div></div>' +
+          '<small>Mostramos somente quantidades. Nenhum nome, senha, mensagem, foto ou conversa é acessado. Uma pessoa pode fazer várias visitas.</small>';
+        card.insertBefore(accounts, close);
+        renderAccountCount(accounts);
       }, 60);
     }, true);
   }
