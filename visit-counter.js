@@ -152,6 +152,19 @@
     var client = getClient();
     if (!client) return;
 
+    var summary = await client.rpc("get_admin_growth_stats");
+    if (!summary.error && summary.data) {
+      var data = typeof summary.data === "string" ? JSON.parse(summary.data) : summary.data;
+      var accountCount = Number(data.accounts) || 0;
+      var visitCount = Number(data.visits) || 0;
+      section.querySelector(".account-count-number").textContent = String(accountCount);
+      section.querySelector(".connected-account-number").textContent = String(Number(data.accounts_with_contacts) || 0);
+      section.querySelector(".visit-total-number").textContent = visitCount ? String(visitCount) : "—";
+      section.querySelector(".account-conversion-number").textContent =
+        visitCount ? Math.min(100, (accountCount / visitCount) * 100).toFixed(1).replace(".", ",") + "%" : "—";
+      return;
+    }
+
     var results = await Promise.all([
       client.from("profiles").select("id", { count: "exact", head: true }),
       client.from("visit_events").select("id", { count: "exact", head: true })
@@ -165,6 +178,7 @@
     }
 
     section.querySelector(".account-count-number").textContent = String(accounts.count);
+    section.querySelector(".connected-account-number").textContent = "—";
     var visitCount = !visits.error && typeof visits.count === "number" ? visits.count : 0;
     section.querySelector(".visit-total-number").textContent = visitCount ? String(visitCount) : "—";
     section.querySelector(".account-conversion-number").textContent =
@@ -183,6 +197,7 @@
         accounts.innerHTML =
           '<h4>O IL Chats está crescendo?</h4><div class="account-numbers">' +
           '<div><strong class="account-count-number">…</strong><span>Contas cadastradas</span></div>' +
+          '<div><strong class="connected-account-number">…</strong><span>Contas com contato conectado</span></div>' +
           '<div><strong class="visit-total-number">…</strong><span>Visitas registradas</span></div>' +
           '<div><strong class="account-conversion-number">…</strong><span>Visitas que viraram conta</span></div></div>' +
           '<small>Mostramos somente quantidades. Nenhum nome, senha, mensagem, foto ou conversa é acessado. Uma pessoa pode fazer várias visitas.</small>';
