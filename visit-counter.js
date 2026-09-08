@@ -186,8 +186,16 @@
           '<div><strong class="visit-total-number">…</strong><span>Visitas registradas</span></div>' +
           '<div><strong class="account-conversion-number">…</strong><span>Visitas que viraram conta</span></div></div>' +
           '<small>Mostramos somente quantidades. Nenhum nome, senha, mensagem, foto ou conversa é acessado. Uma pessoa pode fazer várias visitas.</small>';
+        var section = document.createElement("section");
+        section.className = "visit-summary";
+        section.innerHTML =
+          '<div class="visit-summary-head"><h4>Visitas por localização</h4>' +
+          '<span class="visit-live">● TEMPO REAL</span></div>' +
+          '<div class="visit-list"><div class="visit-empty">Carregando visitas…</div></div>';
         card.insertBefore(accounts, close);
+        card.insertBefore(section, close);
         renderAccountCount(accounts);
+        renderVisits(section);
       }, 60);
     }, true);
   }
