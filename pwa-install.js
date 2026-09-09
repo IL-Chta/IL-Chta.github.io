@@ -43,9 +43,22 @@
     return banner;
   }
 
+  function showHelp(message) {
+    var old = document.querySelector(".il-pwa-help");
+    if (old) old.remove();
+    var modal = document.createElement("div");
+    modal.className = "il-pwa-help";
+    modal.innerHTML = '<div><button type="button" aria-label="Fechar">×</button>' +
+      '<span>📲</span><h3>Instalar o IL Chats</h3><p></p><strong>É grátis e leva poucos segundos.</strong></div>';
+    modal.querySelector("p").textContent = message;
+    modal.querySelector("button").addEventListener("click", function () { modal.remove(); });
+    modal.addEventListener("click", function (event) { if (event.target === modal) modal.remove(); });
+    document.body.appendChild(modal);
+  }
+
   async function installNow() {
     if (isIOS()) {
-      alert("No iPhone ou iPad, abra o IL Chats no Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.");
+      showHelp("No iPhone ou iPad, abra o IL Chats no Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.");
       return;
     }
     if (deferredPrompt) {
@@ -54,7 +67,7 @@
       deferredPrompt = null;
       return;
     }
-    alert("No Chrome, abra o menu ⋮ e escolha Instalar app ou Adicionar à tela inicial.");
+    showHelp("No Chrome, toque no menu ⋮ e escolha Instalar app ou Adicionar à tela inicial.");
   }
 
   function addPermanentButton() {
@@ -67,7 +80,7 @@
       var button = document.createElement("button");
       button.type = "button";
       button.className = "il-pwa-install-entry";
-      button.innerHTML = '<span>📲</span><b>Instalar IL Chats</b><small>Android e iPhone</small>';
+      button.innerHTML = '<span>📲</span><b>INSTALAR GRÁTIS NO CELULAR</b><small>Android e iPhone</small>';
       button.addEventListener("click", installNow);
       var reference = area.querySelector(".logout,.demo");
       if (reference) area.insertBefore(button, reference);
@@ -97,6 +110,9 @@
     deferredPrompt = event;
     showAndroid();
   });
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js?v=3").catch(function () {});
+  }
   window.addEventListener("appinstalled", function () {
     deferredPrompt = null;
     var banner = document.querySelector(".il-pwa-install");
