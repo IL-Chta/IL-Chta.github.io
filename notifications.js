@@ -151,7 +151,7 @@
 
   async function start() {
     if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-    registration = await navigator.serviceWorker.register("/sw.js?v=2");
+    registration = await navigator.serviceWorker.register("/sw.js?v=3");
     var c = client();
     if (!c) return;
     var auth = await c.auth.getUser();
