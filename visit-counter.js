@@ -192,6 +192,14 @@
         var card = document.querySelector(".il-tools-card");
         if (!card || card.querySelector(".visit-summary")) return;
         var close = card.querySelector("button");
+        var topClose = document.createElement("button");
+        topClose.type = "button";
+        topClose.className = "il-tools-close-top";
+        topClose.setAttribute("aria-label", "Fechar painel");
+        topClose.textContent = "×";
+        topClose.addEventListener("click", function () { close.click(); });
+        card.insertBefore(topClose, card.firstChild);
+        close.classList.add("il-tools-close-original");
         var accounts = document.createElement("section");
         accounts.className = "account-count-summary";
         accounts.innerHTML =
