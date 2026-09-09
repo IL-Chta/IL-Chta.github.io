@@ -22,10 +22,19 @@
 .il-pwa-install-text { flex: 1; min-width: 0; font-size: 13px; line-height: 1.35; font-weight: 750; }
 .il-pwa-install-action { flex: 0 0 auto; min-width: 88px; height: 38px; padding: 0 13px; border: 0; border-radius: 11px; background: #1bdcff; color: #041017; font-weight: 900; cursor: pointer; }
 .il-pwa-install-close { flex: 0 0 36px; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: #ffffff14; color: #fff; font-size: 19px; cursor: pointer; }
+.il-pwa-install-entry {
+  width: 100%; min-height: 48px; margin: 4px 0; padding: 8px 12px; border: 1px solid #1bdcff66;
+  border-radius: 13px; background: #102236; color: #fff; display: grid;
+  grid-template-columns: 28px 1fr auto; align-items: center; gap: 8px; text-align: left;
+  box-shadow: 0 7px 22px #12d7ff12; cursor: pointer;
+}
+.il-pwa-install-entry span { font-size: 20px; }
+.il-pwa-install-entry b { color: #1bdcff; font-size: 12px; }
+.il-pwa-install-entry small { color: #9fb0c5; font-size: 9px; }
+.il-pwa-install-entry:hover { border-color: #1bdcff; background: #142b42; }
 @media (max-width: 480px) {
   .il-pwa-install { align-items: flex-start; }
   .il-pwa-install-text { font-size: 12px; }
   .il-pwa-install-action { min-width: 76px; height: 36px; padding: 0 10px; font-size: 12px; }
   .il-pwa-install-close { flex-basis: 34px; width: 34px; height: 34px; }
 }
-

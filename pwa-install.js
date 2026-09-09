@@ -43,6 +43,38 @@
     return banner;
   }
 
+  async function installNow() {
+    if (isIOS()) {
+      alert("No iPhone ou iPad, abra o IL Chats no Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.");
+      return;
+    }
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      return;
+    }
+    alert("No Chrome, abra o menu ⋮ e escolha Instalar app ou Adicionar à tela inicial.");
+  }
+
+  function addPermanentButton() {
+    if (standalone()) {
+      document.querySelectorAll(".il-pwa-install-entry").forEach(function (button) { button.remove(); });
+      return;
+    }
+    document.querySelectorAll(".auth-card,.profile").forEach(function (area) {
+      if (area.querySelector(".il-pwa-install-entry")) return;
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "il-pwa-install-entry";
+      button.innerHTML = '<span>📲</span><b>Instalar IL Chats</b><small>Android e iPhone</small>';
+      button.addEventListener("click", installNow);
+      var reference = area.querySelector(".logout,.demo");
+      if (reference) area.insertBefore(button, reference);
+      else area.appendChild(button);
+    });
+  }
+
   function showAndroid() {
     if (standalone() || dismissedRecently()) return;
     var banner = createBanner();
@@ -69,7 +101,12 @@
     deferredPrompt = null;
     var banner = document.querySelector(".il-pwa-install");
     if (banner) banner.hidden = true;
+    addPermanentButton();
   });
-  window.addEventListener("load", showIOS);
+  window.addEventListener("load", function () {
+    showIOS();
+    addPermanentButton();
+  });
+  new MutationObserver(addPermanentButton).observe(document.documentElement, { childList: true, subtree: true });
+  addPermanentButton();
 })();
-
