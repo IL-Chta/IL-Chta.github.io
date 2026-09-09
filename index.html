@@ -62,6 +62,7 @@
   <link rel="stylesheet" href="/call-responsive.css?v=1">
   <link rel="stylesheet" href="/chat-responsive.css?v=3">
   <link rel="stylesheet" href="/easy-entry.css?v=1">
+  <link rel="stylesheet" href="/pwa-install.css?v=1">
 
   <style id="mobile-call-fix">
     .call-screen.video .call-person{display:none!important}
@@ -79,6 +80,7 @@
   <script src="/update-manager.js?v=1"></script>
   <script src="/contact-invites.js?v=3"></script>
   <script src="/easy-entry.js?v=1"></script>
+  <script defer src="/pwa-install.js?v=1"></script>
   <script defer src="/visit-counter.js?v=6"></script>
 
 <style id="notification-button-style">
@@ -192,7 +194,7 @@
 })();
 </script>
 
-<style id="sharing-admin-drag-style">.profile-share-button,.profile-admin-button{width:100%;height:48px;color:var(--text);background:transparent;border:0;border-bottom:1px solid #ffffff0b;display:flex;align-items:center;gap:10px;font-size:11px}.profile-share-button span,.profile-admin-button span{margin-left:auto}.admin-badge{display:inline-flex;margin:8px auto 0;padding:5px 10px;border-radius:999px;background:#f6bd2b;color:#1a1200;font-size:10px;font-weight:900}.il-tools-modal{position:fixed;z-index:25000;inset:0;background:#000b;display:grid;place-items:center;padding:18px}.il-tools-card{width:min(420px,100%);background:#0b1220;color:#fff;border:1px solid #23dfff55;border-radius:20px;padding:22px;box-shadow:0 25px 80px #000}.il-tools-card h3{margin:0 0 10px}.il-tools-card p{color:#a9b6c9;line-height:1.55}.il-tools-card button{width:100%;height:44px;margin-top:14px;border:0;border-radius:12px;background:#1bdcff;color:#041017;font-weight:800}.shared-contact-toast{position:fixed;z-index:24000;top:18px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 30px);padding:12px 16px;border-radius:14px;background:#0b1825;color:#fff;border:1px solid #1bdcff77;box-shadow:0 12px 35px #000a;text-align:center}</style>
+<style id="sharing-admin-drag-style">.profile-share-button,.profile-admin-button{width:100%;height:48px;color:var(--text);background:transparent;border:0;border-bottom:1px solid #ffffff0b;display:flex;align-items:center;gap:10px;font-size:11px}.profile-share-button span,.profile-admin-button span{margin-left:auto}.admin-badge{display:inline-flex;margin:8px auto 0;padding:5px 10px;border-radius:999px;background:#f6bd2b;color:#1a1200;font-size:10px;font-weight:900}.il-tools-modal{position:fixed;z-index:25000;inset:0;background:#000b;display:grid;place-items:center;padding:18px;box-sizing:border-box}.il-tools-card{width:min(420px,100%);max-height:calc(100dvh - 36px);overflow:auto;box-sizing:border-box;background:#0b1220;color:#fff;border:1px solid #23dfff55;border-radius:20px;padding:22px;box-shadow:0 25px 80px #000}.il-tools-card h3{margin:0 0 10px}.il-tools-card p{color:#a9b6c9;line-height:1.55}.il-tools-card>button:last-child{position:sticky;z-index:2;bottom:0;width:100%;height:44px;margin-top:14px;border:0;border-radius:12px;background:#1bdcff;color:#041017;font-weight:800;box-shadow:0 -10px 18px #0b1220}.shared-contact-toast{position:fixed;z-index:24000;top:18px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 30px);padding:12px 16px;border-radius:14px;background:#0b1825;color:#fff;border:1px solid #1bdcff77;box-shadow:0 12px 35px #000a;text-align:center}</style>
 <script id="sharing-admin-drag-script">
 (function(){
  var URL_BASE="https://il-chta.github.io/";var SUPA_URL="https://ngidsolvxegpyrprlbex.supabase.co";var SUPA_KEY="sb_publishable_-8u67PtkHJj1yRVWtOIkog_2skdsDcz";

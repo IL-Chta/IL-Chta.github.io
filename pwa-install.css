@@ -1,0 +1,31 @@
+.il-pwa-install {
+  position: fixed;
+  z-index: 26000;
+  top: max(10px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, calc(100vw - 20px));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 10px 14px;
+  border: 1px solid #21ddff88;
+  border-radius: 16px;
+  background: #0c1b2bf2;
+  color: #fff;
+  box-shadow: 0 14px 44px #000b, 0 0 24px #12d7ff22;
+  font-family: system-ui, sans-serif;
+  backdrop-filter: blur(12px);
+}
+.il-pwa-install[hidden] { display: none !important; }
+.il-pwa-install-text { flex: 1; min-width: 0; font-size: 13px; line-height: 1.35; font-weight: 750; }
+.il-pwa-install-action { flex: 0 0 auto; min-width: 88px; height: 38px; padding: 0 13px; border: 0; border-radius: 11px; background: #1bdcff; color: #041017; font-weight: 900; cursor: pointer; }
+.il-pwa-install-close { flex: 0 0 36px; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: #ffffff14; color: #fff; font-size: 19px; cursor: pointer; }
+@media (max-width: 480px) {
+  .il-pwa-install { align-items: flex-start; }
+  .il-pwa-install-text { font-size: 12px; }
+  .il-pwa-install-action { min-width: 76px; height: 36px; padding: 0 10px; font-size: 12px; }
+  .il-pwa-install-close { flex-basis: 34px; width: 34px; height: 34px; }
+}
+
