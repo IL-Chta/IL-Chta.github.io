@@ -1,4 +1,18 @@
 /* Mantém os controles da videochamada dentro da tela em janelas menores. */
+.incoming-call{
+  z-index:30000!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+.incoming-call .decline,.incoming-call .accept{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:0 0 46px!important;
+}
+.incoming-call .decline{background:#ff4066!important}
+.incoming-call .accept{background:#1fc96d!important}
 @media (max-width:900px), (max-height:650px){
   .call-screen{padding:18px!important}
   .call-screen>.brand{position:absolute!important;top:16px!important;left:18px!important}
@@ -6,6 +20,15 @@
   .call-controls button{flex:0 0 64px!important;width:64px!important;height:64px!important;border-radius:22px!important}
   .self-video{width:96px!important;height:136px!important;right:14px!important;bottom:94px!important;border-radius:18px!important}
   .self-video video{border-radius:17px!important}
+}
+@media (max-width:520px){
+  .incoming-call{
+    top:max(10px,env(safe-area-inset-top))!important;
+    width:calc(100vw - 20px)!important;
+    min-width:0!important;
+    padding:12px!important;
+    gap:10px!important;
+  }
 }
 @media (max-width:480px){
   .call-screen{padding:12px!important}

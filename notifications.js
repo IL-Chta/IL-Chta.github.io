@@ -118,40 +118,12 @@
   }
 
   function button() {
-    if (Notification.permission !== "default" || document.querySelector(".il-enable-notifications")) return;
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "il-enable-notifications";
-    b.textContent = "🔔 Ativar avisos";
-    var activating = false;
-    async function activate() {
-      if (activating) return;
-      activating = true;
-      b.textContent = "🔔 Permita no navegador…";
-      try {
-        var permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          await subscribeForPush();
-          await show("Avisos ativados", "O IL Chats poderá avisar sobre mensagens e ligações.", false, "notifications-ready");
-          b.remove();
-        } else {
-          b.textContent = "🔕 Avisos bloqueados";
-          alert("Os avisos estão bloqueados. Clique no cadeado ao lado do endereço do IL Chats e permita as notificações.");
-          b.remove();
-        }
-      } catch (_) {
-        b.textContent = "🔔 Tentar ativar novamente";
-        alert("O navegador não conseguiu abrir a autorização. Tente pelo IL Chats instalado ou pelo navegador normal.");
-      }
-      activating = false;
-    }
-    document.body.appendChild(b);
-    b.addEventListener("click", activate);
+    var oldButton = document.querySelector(".il-enable-notifications");
+    if (oldButton) oldButton.remove();
   }
-
   async function start() {
     if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-    registration = await navigator.serviceWorker.register("/sw.js?v=3");
+    registration = await navigator.serviceWorker.register("/sw.js?v=4");
     var c = client();
     if (!c) return;
     var auth = await c.auth.getUser();
