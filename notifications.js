@@ -1,5 +1,10 @@
 (function () {
   "use strict";
+  function removeFloatingBell() {
+    document.querySelectorAll(".il-enable-notifications").forEach(function (element) { element.remove(); });
+  }
+  removeFloatingBell();
+  new MutationObserver(removeFloatingBell).observe(document.documentElement, { childList: true, subtree: true });
   var URL = "https://ngidsolvxegpyrprlbex.supabase.co";
   var KEY = "sb_publishable_-8u67PtkHJj1yRVWtOIkog_2skdsDcz";
   var db, user, channel, registration;
@@ -122,6 +127,7 @@
     if (oldButton) oldButton.remove();
   }
   async function start() {
+    removeFloatingBell();
     if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
     registration = await navigator.serviceWorker.register("/sw.js?v=4");
     var c = client();
