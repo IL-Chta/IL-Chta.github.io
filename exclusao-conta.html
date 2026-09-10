@@ -1,552 +1,1381 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Exclusão de Conta — IL Chats</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!-- =========================================================
+         SEO PRINCIPAL
+    ========================================================== -->
+
+    <title>Exclusão de Conta | IL Chats</title>
 
     <meta
         name="description"
-        content="Solicitação de exclusão de conta e dados associados do IL Chats."
+        content="Página oficial do IL Chats para solicitar a exclusão da conta e dos dados pessoais associados."
     >
 
-    <meta name="robots" content="index, follow">
+    <meta
+        name="keywords"
+        content="IL Chats, exclusão de conta IL Chats, excluir conta IL Chats, apagar conta IL Chats, excluir dados IL Chats, privacidade IL Chats"
+    >
 
-    <!-- Favicon do IL Chats -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta
+        name="author"
+        content="IL Chats"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow, max-image-preview:large"
+    >
+
+    <meta
+        name="application-name"
+        content="IL Chats"
+    >
+
+    <meta
+        name="theme-color"
+        content="#020409"
+    >
+
+    <!-- =========================================================
+         URL CANÔNICA
+    ========================================================== -->
+
+    <link
+        rel="canonical"
+        href="https://il-chta.github.io/exclusao-conta.html"
+    >
+
+    <!-- =========================================================
+         FAVICON
+    ========================================================== -->
+
+    <link
+        rel="icon"
+        href="favicon.ico"
+        type="image/x-icon"
+    >
+
+    <link
+        rel="shortcut icon"
+        href="favicon.ico"
+        type="image/x-icon"
+    >
+
+    <!-- =========================================================
+         OPEN GRAPH
+         WHATSAPP / FACEBOOK / LINKEDIN / ETC.
+    ========================================================== -->
+
+    <meta
+        property="og:locale"
+        content="pt_BR"
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:site_name"
+        content="IL Chats"
+    >
+
+    <meta
+        property="og:title"
+        content="Exclusão de Conta | IL Chats"
+    >
+
+    <meta
+        property="og:description"
+        content="Página oficial para solicitar a exclusão da sua conta e dos dados associados ao IL Chats."
+    >
+
+    <meta
+        property="og:url"
+        content="https://il-chta.github.io/exclusao-conta.html"
+    >
+
+    <meta
+        property="og:image"
+        content="https://il-chta.github.io/logo-exclusao.png"
+    >
+
+    <meta
+        property="og:image:secure_url"
+        content="https://il-chta.github.io/logo-exclusao.png"
+    >
+
+    <meta
+        property="og:image:type"
+        content="image/png"
+    >
+
+    <meta
+        property="og:image:alt"
+        content="IL Chats em dourado sobre fundo preto com iluminação neon azul, rosa e dourada"
+    >
+
+    <!-- =========================================================
+         TWITTER / X CARD
+    ========================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="Exclusão de Conta | IL Chats"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Solicite a exclusão da sua conta e dos dados associados ao IL Chats."
+    >
+
+    <meta
+        name="twitter:image"
+        content="https://il-chta.github.io/logo-exclusao.png"
+    >
+
+    <!-- =========================================================
+         DADOS ESTRUTURADOS
+    ========================================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Exclusão de Conta | IL Chats",
+        "url": "https://il-chta.github.io/exclusao-conta.html",
+        "description": "Página oficial do IL Chats para solicitação de exclusão de conta e dos dados associados.",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "IL Chats",
+            "url": "https://il-chta.github.io/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "IL Chats",
+            "url": "https://il-chta.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://il-chta.github.io/logo-exclusao.png"
+            }
+        }
+    }
+    </script>
+
 
     <style>
+
+        /* =========================================================
+           CONFIGURAÇÃO GERAL
+        ========================================================== */
+
         * {
             box-sizing: border-box;
         }
+
 
         html {
             scroll-behavior: smooth;
         }
 
+
         body {
+
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             background:
-                radial-gradient(circle at 50% 0%, #101b31 0%, #070912 45%, #04060b 100%);
+                radial-gradient(
+                    circle at 50% 0%,
+                    #10182b 0%,
+                    #070912 40%,
+                    #020409 100%
+                );
+
             color: #f4f6fb;
+
             line-height: 1.6;
+
             min-height: 100vh;
         }
 
+
+        /* =========================================================
+           CONTAINER
+        ========================================================== */
+
         .container {
+
             width: 100%;
+
             max-width: 900px;
+
             margin: 0 auto;
-            padding: 45px 20px 60px;
+
+            padding:
+                45px
+                20px
+                60px;
         }
+
+
+        /* =========================================================
+           CARTÃO PRINCIPAL
+        ========================================================== */
 
         .card {
+
             position: relative;
-            background: rgba(17, 21, 34, 0.96);
-            border: 1px solid #252b3a;
-            border-radius: 22px;
-            padding: 40px;
+
+            background:
+                rgba(
+                    14,
+                    18,
+                    30,
+                    0.97
+                );
+
+            border:
+                1px solid
+                #252b3a;
+
+            border-radius:
+                22px;
+
+            padding:
+                40px;
+
             box-shadow:
-                0 15px 50px rgba(0, 0, 0, 0.45),
-                0 0 45px rgba(0, 180, 255, 0.06);
-            overflow: hidden;
+
+                0 15px 50px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.50
+                ),
+
+                0 0 40px
+                rgba(
+                    0,
+                    210,
+                    255,
+                    0.04
+                );
+
+            overflow:
+                hidden;
         }
 
-        /* Brilho discreto no topo do cartão */
+
+        /* =========================================================
+           FILETE DE LUZ NO TOPO
+        ========================================================== */
+
         .card::before {
+
             content: "";
-            position: absolute;
-            top: 0;
-            left: 10%;
-            right: 10%;
-            height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                #00d9ff,
-                #ff35c8,
-                #ffd33d,
-                transparent
-            );
-            box-shadow:
-                0 0 12px #00d9ff,
-                0 0 18px #ff35c8;
-        }
 
-        /* ÁREA DO LOGOTIPO */
-        .logo-area {
-            text-align: center;
-            margin-bottom: 35px;
-        }
+            position:
+                absolute;
 
-        .logo-frame {
-            position: relative;
-            width: min(100%, 580px);
-            margin: 0 auto 35px;
-            padding: 6px;
-            border-radius: 22px;
-        }
+            top:
+                0;
 
-        /*
-         * Anel neon giratório:
-         * azul + rosa + dourado
-         */
-        .logo-frame::before {
-            content: "";
-            position: absolute;
-            inset: -5px;
-            border-radius: 26px;
+            left:
+                15%;
 
-            background: conic-gradient(
-                from 0deg,
-                #00eaff,
-                #00aaff,
-                #ff2bc2,
-                #ff4fd8,
-                #ffd43b,
-                #ff9d00,
-                #00eaff
-            );
+            right:
+                15%;
 
-            animation: neonRotate 5s linear infinite;
-
-            filter:
-                blur(3px)
-                drop-shadow(0 0 8px #00eaff)
-                drop-shadow(0 0 10px #ff2bc2)
-                drop-shadow(0 0 10px #ffd43b);
-
-            z-index: 0;
-        }
-
-        /*
-         * Segundo brilho para deixar o movimento mais vivo
-         */
-        .logo-frame::after {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: 24px;
-
-            background: conic-gradient(
-                from 180deg,
-                transparent 0deg,
-                #00eaff 60deg,
-                transparent 100deg,
-                #ff2bc2 170deg,
-                transparent 220deg,
-                #ffd43b 290deg,
-                transparent 340deg
-            );
-
-            animation: neonRotateReverse 3.5s linear infinite;
-
-            filter: blur(5px);
-            opacity: 0.95;
-            z-index: 0;
-        }
-
-        .logo-inner {
-            position: relative;
-            z-index: 2;
-            background: #020409;
-            border-radius: 18px;
-            overflow: hidden;
-        }
-
-        .logo-inner img {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 18px;
-        }
-
-        @keyframes neonRotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes neonRotateReverse {
-            from {
-                transform: rotate(360deg);
-            }
-
-            to {
-                transform: rotate(0deg);
-            }
-        }
-
-        .logo-area h1 {
-            margin: 0;
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-
-            background: linear-gradient(
-                90deg,
-                #ffffff,
-                #8feeff,
-                #ffffff
-            );
-
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .logo-area > p {
-            margin: 10px 0 0;
-            color: #aeb6c7;
-            font-size: 16px;
-        }
-
-        h2 {
-            margin-top: 32px;
-            margin-bottom: 12px;
-            font-size: 23px;
-            color: #ffffff;
-        }
-
-        p {
-            color: #d7dce7;
-            margin: 12px 0;
-        }
-
-        a {
-            color: #42dfff;
-        }
-
-        a:hover {
-            color: #ffffff;
-        }
-
-        /* AVISO */
-        .notice {
-            margin: 28px 0;
-            padding: 20px;
-            border-radius: 14px;
+            height:
+                1px;
 
             background:
                 linear-gradient(
-                    135deg,
-                    rgba(30, 36, 54, 0.95),
-                    rgba(18, 23, 37, 0.95)
+                    90deg,
+
+                    transparent,
+
+                    rgba(
+                        0,
+                        234,
+                        255,
+                        0.65
+                    ),
+
+                    rgba(
+                        255,
+                        43,
+                        194,
+                        0.65
+                    ),
+
+                    rgba(
+                        255,
+                        212,
+                        59,
+                        0.65
+                    ),
+
+                    transparent
                 );
 
-            border: 1px solid #30384b;
+            box-shadow:
+
+                0 0 8px
+                rgba(
+                    0,
+                    234,
+                    255,
+                    0.50
+                ),
+
+                0 0 10px
+                rgba(
+                    255,
+                    43,
+                    194,
+                    0.30
+                );
+        }
+
+
+        /* =========================================================
+           ÁREA DO LOGOTIPO
+        ========================================================== */
+
+        .logo-area {
+
+            text-align:
+                center;
+
+            margin-bottom:
+                35px;
+        }
+
+
+        /* =========================================================
+           MOLDURA DO LOGOTIPO
+        ========================================================== */
+
+        .logo-frame {
+
+            position:
+                relative;
+
+            width:
+                min(
+                    100%,
+                    620px
+                );
+
+            margin:
+                0 auto 36px;
+
+            padding:
+                3px;
+
+            border-radius:
+                24px;
+
+            background:
+                #020409;
+
+            isolation:
+                isolate;
+        }
+
+
+        /* =========================================================
+           NEON CIRCULANDO
+        ========================================================== */
+
+        .logo-frame::before {
+
+            content: "";
+
+            position:
+                absolute;
+
+            inset:
+                -3px;
+
+            border-radius:
+                27px;
+
+            padding:
+                2px;
+
+            background:
+
+                conic-gradient(
+
+                    from 0deg,
+
+                    transparent
+                    0deg,
+
+                    transparent
+                    35deg,
+
+                    #00eaff
+                    48deg,
+
+                    #4da9ff
+                    58deg,
+
+                    transparent
+                    73deg,
+
+                    transparent
+                    155deg,
+
+                    #ff2bc2
+                    170deg,
+
+                    transparent
+                    188deg,
+
+                    transparent
+                    260deg,
+
+                    #ffd43b
+                    275deg,
+
+                    #ff9d00
+                    285deg,
+
+                    transparent
+                    302deg,
+
+                    transparent
+                    360deg
+                );
+
+            animation:
+                neonRotate
+                8s
+                linear
+                infinite;
+
+            filter:
+                blur(
+                    1px
+                );
 
             box-shadow:
-                0 0 20px rgba(0, 180, 255, 0.04);
+
+                0 0 7px
+                rgba(
+                    0,
+                    234,
+                    255,
+                    0.35
+                ),
+
+                0 0 7px
+                rgba(
+                    255,
+                    43,
+                    194,
+                    0.30
+                ),
+
+                0 0 6px
+                rgba(
+                    255,
+                    212,
+                    59,
+                    0.25
+                );
+
+            z-index:
+                -1;
         }
+
+
+        /* =========================================================
+           PEQUENO PONTO DE LUZ MAIS FORTE
+        ========================================================== */
+
+        .logo-frame::after {
+
+            content: "";
+
+            position:
+                absolute;
+
+            inset:
+                -1px;
+
+            border-radius:
+                25px;
+
+            background:
+
+                conic-gradient(
+
+                    from 100deg,
+
+                    transparent
+                    0deg,
+
+                    transparent
+                    315deg,
+
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.85
+                    )
+                    330deg,
+
+                    rgba(
+                        0,
+                        234,
+                        255,
+                        0.90
+                    )
+                    336deg,
+
+                    transparent
+                    348deg,
+
+                    transparent
+                    360deg
+                );
+
+            animation:
+                neonRotate
+                8s
+                linear
+                infinite;
+
+            filter:
+                blur(
+                    2px
+                );
+
+            opacity:
+                0.75;
+
+            z-index:
+                -1;
+        }
+
+
+        /* =========================================================
+           INTERIOR DO LOGOTIPO
+        ========================================================== */
+
+        .logo-inner {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            background:
+                #000000;
+
+            border-radius:
+                21px;
+
+            overflow:
+                hidden;
+        }
+
+
+        .logo-inner img {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            height:
+                auto;
+
+            background:
+                #000000;
+
+            border-radius:
+                21px;
+        }
+
+
+        /* =========================================================
+           ANIMAÇÃO DO NEON
+        ========================================================== */
+
+        @keyframes neonRotate {
+
+            from {
+                transform:
+                    rotate(
+                        0deg
+                    );
+            }
+
+            to {
+                transform:
+                    rotate(
+                        360deg
+                    );
+            }
+        }
+
+
+        /* =========================================================
+           TÍTULO
+        ========================================================== */
+
+        .logo-area h1 {
+
+            margin:
+                0;
+
+            font-size:
+                36px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                -0.5px;
+
+            background:
+
+                linear-gradient(
+
+                    90deg,
+
+                    #ffffff,
+
+                    #8feeff,
+
+                    #ffffff
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+        }
+
+
+        .logo-area > p {
+
+            margin:
+                10px 0 0;
+
+            color:
+                #aeb6c7;
+
+            font-size:
+                16px;
+        }
+
+
+        /* =========================================================
+           TÍTULOS SECUNDÁRIOS
+        ========================================================== */
+
+        h2 {
+
+            margin-top:
+                32px;
+
+            margin-bottom:
+                12px;
+
+            font-size:
+                23px;
+
+            color:
+                #ffffff;
+        }
+
+
+        p {
+
+            color:
+                #d7dce7;
+
+            margin:
+                12px 0;
+        }
+
+
+        /* =========================================================
+           LINKS
+        ========================================================== */
+
+        a {
+
+            color:
+                #42dfff;
+        }
+
+
+        a:hover {
+
+            color:
+                #ffffff;
+        }
+
+
+        /* =========================================================
+           AVISO IMPORTANTE
+        ========================================================== */
+
+        .notice {
+
+            margin:
+                28px 0;
+
+            padding:
+                20px;
+
+            border-radius:
+                14px;
+
+            background:
+
+                linear-gradient(
+
+                    135deg,
+
+                    rgba(
+                        30,
+                        36,
+                        54,
+                        0.95
+                    ),
+
+                    rgba(
+                        18,
+                        23,
+                        37,
+                        0.95
+                    )
+                );
+
+            border:
+                1px solid
+                #30384b;
+
+            box-shadow:
+
+                0 0 20px
+                rgba(
+                    0,
+                    180,
+                    255,
+                    0.04
+                );
+        }
+
 
         .notice strong {
-            color: #ffd34d;
-            font-size: 17px;
+
+            color:
+                #ffd34d;
+
+            font-size:
+                17px;
         }
 
-        /* ETAPAS */
+
+        /* =========================================================
+           ETAPAS
+        ========================================================== */
+
         .steps {
-            margin-top: 22px;
+
+            margin-top:
+                22px;
         }
+
 
         .step {
-            margin-bottom: 18px;
-            padding: 20px;
 
-            background: #0c101b;
-            border-radius: 14px;
-            border: 1px solid #252b3a;
+            margin-bottom:
+                18px;
+
+            padding:
+                20px;
+
+            background:
+                #0c101b;
+
+            border-radius:
+                14px;
+
+            border:
+                1px solid
+                #252b3a;
 
             transition:
-                transform 0.25s ease,
-                border-color 0.25s ease,
-                box-shadow 0.25s ease;
+
+                transform
+                0.25s
+                ease,
+
+                border-color
+                0.25s
+                ease,
+
+                box-shadow
+                0.25s
+                ease;
         }
+
 
         .step:hover {
-            transform: translateY(-2px);
-            border-color: #24465a;
-            box-shadow: 0 0 20px rgba(0, 220, 255, 0.05);
+
+            transform:
+                translateY(
+                    -2px
+                );
+
+            border-color:
+                #24465a;
+
+            box-shadow:
+
+                0 0 20px
+                rgba(
+                    0,
+                    220,
+                    255,
+                    0.05
+                );
         }
+
 
         .step strong {
-            display: block;
-            margin-bottom: 7px;
-            color: #ffffff;
-            font-size: 17px;
+
+            display:
+                block;
+
+            margin-bottom:
+                7px;
+
+            color:
+                #ffffff;
+
+            font-size:
+                17px;
         }
 
-        /* BOTÃO */
+
+        /* =========================================================
+           BOTÕES
+        ========================================================== */
+
         .button-area {
-            text-align: center;
-            margin-top: 35px;
+
+            text-align:
+                center;
+
+            margin-top:
+                35px;
         }
+
 
         .button {
-            display: inline-block;
-            padding: 14px 26px;
-            border-radius: 12px;
 
-            background: linear-gradient(
-                90deg,
-                #ffffff,
-                #e9faff
-            );
+            display:
+                inline-block;
 
-            color: #070912;
-            text-decoration: none;
-            font-weight: 800;
+            padding:
+                14px 26px;
+
+            border-radius:
+                12px;
+
+            background:
+
+                linear-gradient(
+
+                    90deg,
+
+                    #ffffff,
+
+                    #e9faff
+                );
+
+            color:
+                #070912;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                800;
 
             box-shadow:
-                0 0 18px rgba(66, 223, 255, 0.15);
+
+                0 0 18px
+                rgba(
+                    66,
+                    223,
+                    255,
+                    0.15
+                );
 
             transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+
+                transform
+                0.2s
+                ease,
+
+                box-shadow
+                0.2s
+                ease;
         }
+
 
         .button:hover {
-            color: #070912;
-            transform: translateY(-2px);
+
+            color:
+                #070912;
+
+            transform:
+                translateY(
+                    -2px
+                );
 
             box-shadow:
-                0 0 25px rgba(66, 223, 255, 0.35);
+
+                0 0 25px
+                rgba(
+                    66,
+                    223,
+                    255,
+                    0.35
+                );
         }
+
 
         .button.email {
-            margin-right: 8px;
+
+            margin-right:
+                8px;
         }
 
-        /* RODAPÉ */
+
+        /* =========================================================
+           RODAPÉ
+        ========================================================== */
+
         footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #8e97aa;
-            font-size: 13px;
+
+            text-align:
+                center;
+
+            margin-top:
+                30px;
+
+            color:
+                #8e97aa;
+
+            font-size:
+                13px;
         }
+
 
         footer a {
-            color: #bfc7d8;
+
+            color:
+                #bfc7d8;
         }
 
-        /* CELULAR */
-        @media (max-width: 600px) {
+
+        /* =========================================================
+           CELULAR
+        ========================================================== */
+
+        @media (
+            max-width:
+            600px
+        ) {
 
             .container {
-                padding: 20px 12px 40px;
+
+                padding:
+                    20px
+                    12px
+                    40px;
             }
+
 
             .card {
-                padding: 25px 18px;
-                border-radius: 16px;
+
+                padding:
+                    25px
+                    18px;
+
+                border-radius:
+                    16px;
             }
+
 
             .logo-frame {
-                width: 100%;
-                margin-bottom: 28px;
+
+                width:
+                    100%;
+
+                margin-bottom:
+                    28px;
             }
+
 
             .logo-area h1 {
-                font-size: 29px;
+
+                font-size:
+                    29px;
             }
+
 
             .logo-area > p {
-                font-size: 14px;
+
+                font-size:
+                    14px;
             }
+
 
             h2 {
-                font-size: 21px;
+
+                font-size:
+                    21px;
             }
+
 
             .step {
-                padding: 17px;
+
+                padding:
+                    17px;
             }
 
+
             .button {
-                width: 100%;
-                margin: 5px 0;
+
+                width:
+                    100%;
+
+                margin:
+                    5px 0;
             }
         }
 
-        /* Respeita quem prefere menos animação */
-        @media (prefers-reduced-motion: reduce) {
+
+        /* =========================================================
+           ACESSIBILIDADE
+           DESATIVA MOVIMENTO SE USUÁRIO PREFERIR
+        ========================================================== */
+
+        @media (
+            prefers-reduced-motion:
+            reduce
+        ) {
+
             .logo-frame::before,
             .logo-frame::after {
-                animation: none;
+
+                animation:
+                    none;
             }
+
 
             .step,
             .button {
-                transition: none;
+
+                transition:
+                    none;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
     <main class="container">
+
 
         <section class="card">
 
-            <!-- LOGOTIPO IL CHATS -->
+
+            <!-- =====================================================
+                 LOGOTIPO IL CHATS
+            ====================================================== -->
+
             <div class="logo-area">
+
 
                 <div class="logo-frame">
 
+
                     <div class="logo-inner">
 
+
                         <img
-                            src="logo-chats.png"
-                            alt="IL Chats — Leão dourado, logotipo e detalhes neon"
+                            src="logo-exclusao.png"
+                            alt="IL Chats — logotipo dourado com leão e iluminação neon"
                         >
+
 
                     </div>
 
+
                 </div>
 
-                <h1>Exclusão de Conta</h1>
+
+                <h1>
+                    Exclusão de Conta
+                </h1>
+
 
                 <p>
                     Solicitação de exclusão de conta e dados associados
                 </p>
 
+
             </div>
 
 
-            <!-- EXCLUSÃO -->
-            <h2>Exclusão de conta</h2>
+            <!-- =====================================================
+                 EXCLUSÃO DE CONTA
+            ====================================================== -->
+
+            <h2>
+                Exclusão de conta
+            </h2>
+
 
             <p>
+
                 Esta página permite que usuários do IL Chats solicitem
                 a exclusão de sua conta e dos dados associados.
+
             </p>
 
 
-            <!-- AVISO -->
+            <!-- =====================================================
+                 AVISO
+            ====================================================== -->
+
             <div class="notice">
 
-                <strong>Importante:</strong>
+
+                <strong>
+                    Importante:
+                </strong>
+
 
                 <p>
+
                     A exclusão da conta é uma ação permanente.
                     Após a confirmação da solicitação, os dados
                     associados à conta serão tratados de acordo com
                     a Política de Privacidade do IL Chats.
+
                 </p>
+
 
             </div>
 
 
-            <!-- COMO SOLICITAR -->
-            <h2>Como solicitar a exclusão</h2>
+            <!-- =====================================================
+                 COMO SOLICITAR
+            ====================================================== -->
+
+            <h2>
+                Como solicitar a exclusão
+            </h2>
+
 
             <div class="steps">
 
+
                 <div class="step">
+
 
                     <strong>
                         1. Envie sua solicitação
                     </strong>
 
+
                     <p>
+
                         Clique no botão abaixo para enviar uma
                         solicitação de exclusão da sua conta do
                         IL Chats.
+
                     </p>
+
 
                 </div>
 
 
                 <div class="step">
+
 
                     <strong>
                         2. Informe o e-mail da sua conta
                     </strong>
 
+
                     <p>
+
                         Informe o endereço de e-mail associado
                         à sua conta do IL Chats para que possamos
                         localizar a conta correta.
+
                     </p>
+
 
                 </div>
 
 
                 <div class="step">
 
+
                     <strong>
                         3. Processamento da solicitação
                     </strong>
 
+
                     <p>
+
                         A solicitação será analisada e processada
                         de acordo com a Política de Privacidade
                         e os procedimentos aplicáveis ao IL Chats.
+
                     </p>
 
+
                 </div>
+
 
             </div>
 
 
-            <!-- DADOS -->
-            <h2>Quais dados podem ser excluídos?</h2>
+            <!-- =====================================================
+                 DADOS
+            ====================================================== -->
+
+            <h2>
+                Quais dados podem ser excluídos?
+            </h2>
+
 
             <p>
+
                 A solicitação de exclusão da conta poderá incluir
                 os dados associados à conta, conforme descrito na
                 Política de Privacidade do IL Chats.
+
             </p>
 
+
             <p>
+
                 Alguns registros poderão ser mantidos quando houver
                 obrigação legal ou outra finalidade legítima prevista
                 na legislação aplicável.
+
             </p>
 
 
-            <!-- BOTÕES -->
+            <!-- =====================================================
+                 BOTÕES
+            ====================================================== -->
+
             <div class="button-area">
+
 
                 <a
                     class="button email"
                     href="mailto:il-chat1@outlook.com?subject=Solicitação%20de%20exclusão%20de%20conta%20—%20IL%20Chats"
                 >
+
                     Solicitar exclusão da conta
+
                 </a>
+
 
                 <a
                     class="button"
                     href="privacidade.html"
                 >
+
                     Ver Política de Privacidade
+
                 </a>
 
+
             </div>
+
 
         </section>
 
 
+        <!-- =========================================================
+             RODAPÉ
+        ========================================================== -->
+
         <footer>
 
+
             © 2026 IL Chats ·
+
 
             <a href="privacidade.html">
                 Política de Privacidade
             </a>
 
+
         </footer>
+
 
     </main>
 
+
 </body>
+
+
 </html>
