@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Exclusão de Conta — IL Chats</title>
+
+    <meta name="description" content="Solicitação de exclusão de conta e dados associados do IL Chats.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon do IL Chats -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(0, 183, 255, 0.12),
+                    transparent 38%
+                ),
+                #070912;
+            color: #f4f6fb;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 35px 20px 60px;
+        }
+
+        .card {
+            background: rgba(17, 21, 34, 0.97);
+            border: 1px solid #252b3a;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, 0.45),
+                0 0 35px rgba(0, 183, 255, 0.08);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo img {
+            display: block;
+            width: min(100%, 560px);
+            height: auto;
+            margin: 0 auto 25px;
+            border-radius: 16px;
+            box-shadow:
+                0 0 20px rgba(0, 183, 255, 0.25),
+                0 0 35px rgba(255, 0, 180, 0.12);
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 34px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .logo p {
+            margin: 8px 0 0;
+            color: #aeb6c7;
+            font-size: 16px;
+        }
+
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 12px;
+            font-size: 23px;
+            color: #ffffff;
+        }
+
+        p {
+            color: #d7dce7;
+            margin: 12px 0;
+        }
+
+        a {
+            color: #42dfff;
+        }
+
+        a:hover {
+            opacity: 0.85;
+        }
+
+        .notice {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 14px;
+            background: #191e2c;
+            border: 1px solid #30384b;
+            box-shadow: 0 0 18px rgba(0, 183, 255, 0.05);
+        }
+
+        .notice strong {
+            color: #ffffff;
+        }
+
+        .steps {
+            margin-top: 20px;
+        }
+
+        .step {
+            margin-bottom: 18px;
+            padding: 20px;
+            background: #0c101b;
+            border-radius: 14px;
+            border: 1px solid #252b3a;
+        }
+
+        .step strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #ffffff;
+            font-size: 17px;
+        }
+
+        .button-area {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 26px;
+            border-radius: 12px;
+            background: linear-gradient(
+                90deg,
+                #27d9ff,
+                #61e6d2
+            );
+            color: #071018;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow:
+                0 0 22px rgba(39, 217, 255, 0.20);
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 28px;
+            color: #8e97aa;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: #bfc7d8;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 12px 40px;
+            }
+
+            .card {
+                padding: 23px 18px;
+                border-radius: 15px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+
+            .logo p {
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .logo img {
+                width: 100%;
+                border-radius: 12px;
+            }
+
+            .step {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <section class="card">
+
+            <div class="logo">
+
+                <!-- Logo completo do IL Chats com Leão dourado e neon -->
+                <img
+                    src="logo-chats.png"
+                    alt="IL Chats — Leão dourado com logo neon"
+                >
+
+                <h1>Exclusão de Conta</h1>
+
+                <p>
+                    Solicitação de exclusão de conta e dados associados
+                </p>
+
+            </div>
+
+            <h2>Exclusão de conta</h2>
+
+            <p>
+                Esta página permite que usuários do IL Chats solicitem
+                a exclusão de sua conta e dos dados associados.
+            </p>
+
+            <div class="notice">
+
+                <strong>Importante:</strong>
+
+                <p>
+                    A exclusão da conta é uma ação permanente. Após a
+                    confirmação da solicitação, os dados associados à conta
+                    serão tratados de acordo com a Política de Privacidade
+                    do IL Chats.
+                </p>
+
+            </div>
+
+            <h2>Como solicitar a exclusão</h2>
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <strong>1. Envie sua solicitação</strong>
+
+                    <p>
+                        Envie uma solicitação de exclusão para o endereço
+                        de contato informado na
+                        <a href="privacidade.html">
+                            Política de Privacidade
+                        </a>
+                        do IL Chats.
+                    </p>
+
+                </div>
+
+                <div class="step">
+
+                    <strong>2. Informe os dados necessários</strong>
+
+                    <p>
+                        Informe no pedido o endereço de e-mail associado
+                        à sua conta do IL Chats para que possamos localizar
+                        a conta correta.
+                    </p>
+
+                </div>
+
+                <div class="step">
+
+                    <strong>3. Processamento da solicitação</strong>
+
+                    <p>
+                        A solicitação será analisada e processada de acordo
+                        com a Política de Privacidade e os procedimentos
+                        aplicáveis ao IL Chats.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <h2>Quais dados podem ser excluídos?</h2>
+
+            <p>
+                A solicitação de exclusão da conta poderá incluir os dados
+                associados à conta, conforme descrito na Política de
+                Privacidade do IL Chats.
+            </p>
+
+            <p>
+                Alguns registros poderão ser mantidos quando houver
+                obrigação legal ou outra finalidade legítima prevista
+                na legislação aplicável.
+            </p>
+
+            <div class="button-area">
+
+                <a
+                    class="button"
+                    href="privacidade.html"
+                >
+                    Ver Política de Privacidade
+                </a>
+
+            </div>
+
+        </section>
+
+        <footer>
+
+            © 2026 IL Chats ·
+
+            <a href="privacidade.html">
+                Política de Privacidade
+            </a>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>
