@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.ilchats.app",
+      "sha256_cert_fingerprints": [
+        "57:85:B2:1A:6D:DE:33:EB:F0:53:D8:22:56:C4:9F:40:FF:6C:DC:6C:C6:4A:16:6E:13:BC:88:D6:FB:F2:BF:16"
+      ]
+    }
+  }
+]
