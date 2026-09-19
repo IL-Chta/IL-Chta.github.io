@@ -3,7 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 const cors = {
   "Access-Control-Allow-Origin": "https://il-chta.github.io",
-  "Access-Control-Allow-Headers": "authorization, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
 };
 
 webpush.setVapidDetails(
@@ -29,9 +29,16 @@ Deno.serve(async (request) => {
     const admin = createClient(url, service);
     let recipients: string[] = [];
 
-    if (body.type === "call" && body.recipient_id) {
+    if (body.type === "call" && body.recipient_id && body.call_id) {
+      const { data: signal } = await admin.from("call_signals").select("call_id")
+        .eq("call_id", body.call_id).eq("sender_id", caller.id)
+        .eq("recipient_id", body.recipient_id).eq("signal_type", "offer").maybeSingle();
+      if (!signal) return Response.json({ error: "call not found" }, { status: 403, headers: cors });
       recipients = [body.recipient_id];
     } else if (body.type === "message" && body.conversation_id) {
+      const { data: membership } = await admin.from("conversation_members").select("user_id")
+        .eq("conversation_id", body.conversation_id).eq("user_id", caller.id).maybeSingle();
+      if (!membership) return Response.json({ error: "conversation not found" }, { status: 403, headers: cors });
       const { data } = await admin.from("conversation_members").select("user_id")
         .eq("conversation_id", body.conversation_id).neq("user_id", caller.id);
       recipients = (data || []).map((item) => item.user_id);
@@ -51,18 +58,24 @@ Deno.serve(async (request) => {
     });
     const { data: subscriptions } = await admin.from("push_subscriptions").select("id,subscription").in("user_id", recipients);
     let sent = 0;
+    let failed = 0;
     for (const item of subscriptions || []) {
       try {
-        await webpush.sendNotification(item.subscription, payload);
+        await webpush.sendNotification(item.subscription, payload, {
+          TTL: isCall ? 90 : 86400,
+          urgency: isCall ? "high" : "normal",
+          topic: isCall ? `call-${body.call_id}` : undefined,
+        });
         sent += 1;
       } catch (error) {
+        failed += 1;
         const statusCode = (error as { statusCode?: number }).statusCode;
         if (statusCode === 404 || statusCode === 410) {
           await admin.from("push_subscriptions").delete().eq("id", item.id);
-        }
+        } else console.error("push delivery failed", { subscription_id: item.id, statusCode, message: error instanceof Error ? error.message : String(error) });
       }
     }
-    return Response.json({ sent }, { headers: cors });
+    return Response.json({ sent, failed, recipients: recipients.length }, { headers: cors });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return Response.json({ error: message }, { status: 500, headers: cors });
