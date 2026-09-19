@@ -8,6 +8,10 @@ create table if not exists public.push_subscriptions (
 
 alter table public.push_subscriptions enable row level security;
 
+drop policy if exists "push_subscription_select_own" on public.push_subscriptions;
+create policy "push_subscription_select_own" on public.push_subscriptions
+for select to authenticated using (auth.uid() = user_id);
+
 drop policy if exists "push_subscription_insert_own" on public.push_subscriptions;
 create policy "push_subscription_insert_own" on public.push_subscriptions
 for insert to authenticated with check (auth.uid() = user_id);
@@ -20,4 +24,4 @@ drop policy if exists "push_subscription_delete_own" on public.push_subscription
 create policy "push_subscription_delete_own" on public.push_subscriptions
 for delete to authenticated using (auth.uid() = user_id);
 
-grant insert, update, delete on public.push_subscriptions to authenticated;
+grant select, insert, update, delete on public.push_subscriptions to authenticated;

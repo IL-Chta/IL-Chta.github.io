@@ -15,7 +15,10 @@
         "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
-    }).catch(function () {});
+    }).then(function (response) {
+      if (!response.ok) return response.text().then(function (text) { throw new Error("push-notify " + response.status + ": " + text); });
+      return response;
+    }).catch(function (error) { console.error("[IL Chats Push] falha ao disparar push", error); });
   }
 
   window.fetch = async function (input, init) {
@@ -45,7 +48,7 @@
           }, headers);
         }
       });
-    } catch (_) {}
+    } catch (error) { console.error("[IL Chats Push] falha ao interpretar envio", error); }
     return response;
   };
 })();
