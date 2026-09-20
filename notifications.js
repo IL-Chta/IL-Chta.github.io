@@ -73,7 +73,7 @@
   }
   async function start() {
     if (!("serviceWorker" in navigator) || !("Notification" in window) || !("PushManager" in window)) { logError("compatibilidade", "Web Push indisponível"); return; }
-    registration = await navigator.serviceWorker.register("/sw.js?v=5", { updateViaCache:"none" }); await registration.update();
+    registration = await navigator.serviceWorker.register("/sw.js?v=6", { updateViaCache:"none" }); await registration.update();
     var c = client(); if (!c) throw new Error("Cliente Supabase não encontrado");
     var session = await c.auth.getSession(); await configureForSession(session.data && session.data.session && session.data.session.user);
     c.auth.onAuthStateChange(function (_event, nextSession) { setTimeout(function () { configureForSession(nextSession && nextSession.user).catch(function (error) { logError("sessão", error); }); }, 0); });

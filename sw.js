@@ -11,7 +11,9 @@ self.addEventListener("push", function (event) {
   }
   var isCall = data.type === "call";
   event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (windows) {
-    if (windows.some(function (client) { return client.visibilityState === "visible"; })) return;
+    // O Android pode manter uma janela como "visible" mesmo quando o PWA/TWA
+    // está em segundo plano ou com a tela bloqueada. Nunca suprima chamadas.
+    if (!isCall && windows.some(function (client) { return client.visibilityState === "visible"; })) return;
     return self.registration.showNotification(data.title || (isCall ? "Ligação no IL Chats" : "Nova mensagem no IL Chats"), {
     body: data.body || (isCall ? "Alguém está ligando para você." : "Você recebeu uma mensagem."),
     icon: "/icon.svg",
@@ -19,6 +21,8 @@ self.addEventListener("push", function (event) {
     tag: data.tag || (isCall ? "ilchats-call" : "ilchats-message"),
     renotify: true,
     requireInteraction: isCall,
+    silent: false,
+    timestamp: Date.now(),
     vibrate: isCall ? [700, 300, 700, 300, 900] : [250, 120, 250],
     data: { url: data.url || "/", type: data.type || "message" },
     actions: isCall ? [

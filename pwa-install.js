@@ -111,7 +111,7 @@
     showAndroid();
   });
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js?v=5", { updateViaCache: "none" }).catch(function (error) { console.error("[IL Chats PWA] falha ao registrar Service Worker", error); });
+    navigator.serviceWorker.register("/sw.js?v=6", { updateViaCache: "none" }).catch(function (error) { console.error("[IL Chats PWA] falha ao registrar Service Worker", error); });
   }
   window.addEventListener("appinstalled", function () {
     deferredPrompt = null;
