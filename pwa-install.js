@@ -12,6 +12,14 @@
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   }
 
+  function isWindows() {
+    return /Windows/i.test(navigator.userAgent);
+  }
+
+  function isAndroid() {
+    return /Android/i.test(navigator.userAgent);
+  }
+
   function dismissedRecently() {
     var saved = Number(localStorage.getItem(dismissedKey) || 0);
     return saved && Date.now() - saved < 7 * 24 * 60 * 60 * 1000;
@@ -67,7 +75,11 @@
       deferredPrompt = null;
       return;
     }
-    showHelp("No Chrome, toque no menu ⋮ e escolha Instalar app ou Adicionar à tela inicial.");
+    if (isWindows()) {
+      showHelp("No computador, abra o IL Chats no Chrome ou Edge, clique no ícone de instalação na barra de endereço e confirme Instalar.");
+      return;
+    }
+    showHelp("No Android, abra no Chrome, toque no menu ⋮ e escolha Instalar app ou Adicionar à tela inicial.");
   }
 
   function addPermanentButton() {
@@ -80,18 +92,30 @@
       var button = document.createElement("button");
       button.type = "button";
       button.className = "il-pwa-install-entry";
-      button.innerHTML = '<span>📲</span><b>INSTALAR GRÁTIS NO CELULAR</b><small>Android e iPhone</small>';
+      button.innerHTML = '<span>📲</span><b>INSTALAR O IL CHATS</b><small>Android, Windows e iPhone</small>';
       button.addEventListener("click", installNow);
       var reference = area.querySelector(".logout,.demo");
       if (reference) area.insertBefore(button, reference);
       else area.appendChild(button);
+
+      if (isAndroid() && !area.querySelector(".il-apk-download-entry")) {
+        var apk = document.createElement("a");
+        apk.className = "il-pwa-install-entry il-apk-download-entry";
+        apk.href = "/downloads/IL-Chats.apk";
+        apk.download = "IL-Chats.apk";
+        apk.innerHTML = '<span>🤖</span><b>BAIXAR APK OFICIAL</b><small>Android · pacote com.ilchats.app</small>';
+        if (reference) area.insertBefore(apk, reference);
+        else area.appendChild(apk);
+      }
     });
   }
 
   function showAndroid() {
     if (standalone() || dismissedRecently()) return;
     var banner = createBanner();
-    banner.querySelector(".il-pwa-install-text").textContent = "Instale o IL Chats no seu celular.";
+    banner.querySelector(".il-pwa-install-text").textContent = isWindows()
+      ? "Instale o IL Chats neste computador."
+      : "Instale o IL Chats no seu celular.";
     banner.querySelector(".il-pwa-install-action").hidden = false;
     banner.hidden = false;
   }

@@ -32,6 +32,7 @@
 .il-pwa-install-entry b { color: #031017; font-size: 12px; font-weight: 950; }
 .il-pwa-install-entry small { color: #073f48; font-size: 9px; font-weight: 750; }
 .il-pwa-install-entry:hover { filter: brightness(1.08); }
+.il-apk-download-entry { text-decoration: none; background: linear-gradient(100deg,#f7c84b,#ff9f43); border-color:#ffe59a; }
 .il-pwa-help{position:fixed;z-index:27000;inset:0;padding:18px;background:#000b;display:grid;place-items:center}.il-pwa-help>div{position:relative;width:min(390px,100%);padding:28px 22px;text-align:center;border:1px solid #1bdcff77;border-radius:20px;background:#0b1625;color:#fff;box-shadow:0 22px 70px #000}.il-pwa-help button{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:#ffffff14;color:#fff;font-size:22px}.il-pwa-help>div>span{font-size:38px}.il-pwa-help h3{margin:10px 0;color:#1bdcff}.il-pwa-help p{color:#dce9f7;line-height:1.55}.il-pwa-help strong{display:block;margin-top:12px;color:#45e5b5;font-size:12px}
 @media (max-width: 480px) {
   .il-pwa-install { align-items: flex-start; }
