@@ -1,0 +1,18 @@
+IL BATE PAPO v11 — 22/09/2026
+
+Objetivo desta versão:
+- preservar o visual atual;
+- remover as camadas/monkeypatches recentes que interceptavam navigator.mediaDevices.getUserMedia;
+- restaurar o caminho nativo de câmera usado na V7, versão confirmada pelo usuário como funcional;
+- manter o olho mostrar/ocultar senha;
+- preservar ringtone.js, notifications.js, push-sender.js e sw.js existentes.
+
+Câmera restaurada:
+- conversa: getUserMedia({video:{facingMode:{ideal:facing}},audio:true})
+- chamadas do bundle continuam usando o getUserMedia nativo, sem interceptador v10.
+- tracks são encerradas pelo stopAll() antes de nova abertura/troca.
+
+Alertas preservados:
+- toque em chamada recebida enquanto a página pode executar áudio;
+- vibração em dispositivos/navegadores compatíveis;
+- Web Push/Service Worker para mensagem e chamada em segundo plano/tela bloqueada, sujeito às permissões e regras do sistema operacional.

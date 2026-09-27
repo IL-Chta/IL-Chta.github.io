@@ -1,0 +1,17 @@
+IL BATE PAPO — RESTAURAÇÃO DA CÂMERA V7
+
+Objetivo:
+Restaurar somente os arquivos ligados ao caminho funcional da câmera,
+usando a versão V7/V11 confirmada como referência.
+
+Arquivos incluídos:
+- index-receber-video-20260906.js
+- ilbp-fixes-20260922.js
+- V11-CAMERA-RESTAURADA-DA-V7.txt
+
+IMPORTANTE:
+Não substituir index.html com este pacote.
+O index.html atual contém alterações posteriores (SEO/Analytics/visual).
+Este pacote foi reduzido para evitar mexer no restante do site.
+
+Faça backup antes de publicar.
