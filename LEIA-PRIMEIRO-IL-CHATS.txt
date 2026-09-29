@@ -1,0 +1,14 @@
+IL CHATS — correção focada
+Endereço: https://il-chta.github.io/IL-Chat/
+
+Corrigido nesta versão:
+- logotipo: o bundle chamava ./logo-bate-papo.png, arquivo que NÃO existe no pacote;
+  agora usa ./logo-ildebrando.png, que existe.
+- autenticação: removido retorno para il-bate-papo.github.io; retorno fica no IL Chats /IL-Chat/.
+- câmera de chamada: removida a escolha antecipada de deviceId e restaurada a aquisição
+  simples audio+video usada em bundle histórico do próprio IL Chats, com fallback.
+- service worker: escopo relativo a /IL-Chat/, sem registrar na raiz do domínio.
+
+Base: ZIP atual enviado pelo usuário em 28/09/2026.
+IL Bate Papo: não alterado.
+IL Chats Mail: não alterado.
