@@ -1,0 +1,11 @@
+IL CHATS
+Endereço confirmado: https://il-chta.github.io/IL-Chat/
+
+Correção desta versão:
+- remove referência errada do logo ao domínio il-bate-papo.github.io;
+- logo passa a carregar do próprio IL Chats;
+- recursos locais do index passam a usar caminhos relativos, compatíveis com /IL-Chat/;
+- não altera IL Bate Papo;
+- não altera IL Chats Mail.
+
+Suba o CONTEÚDO deste ZIP no repositório que publica /IL-Chat/.
