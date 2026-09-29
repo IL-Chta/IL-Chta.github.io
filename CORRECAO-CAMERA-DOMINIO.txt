@@ -1,0 +1,9 @@
+IL CHATS — pacote de correção
+
+1. Base: IL-Chat-main (3)(2).zip.
+2. Corrigido carregamento absoluto que apontava /IL-Chat/ para arquivos da raiz do domínio.
+3. Arquivos locais agora são carregados relativamente ao diretório IL-Chat.
+4. Metadados IL Bate Papo removidos do index do IL Chats.
+5. Câmera: removida seleção forçada por deviceId/label; captura usa diretamente navigator.mediaDevices.getUserMedia({audio:true, video:true}) para chamada de vídeo, preservando WebRTC/sinalização existente.
+6. Nenhum arquivo do IL Chats Mail ou IL Bate Papo foi usado.
+7. A webcam física ainda precisa ser confirmada no computador real.
