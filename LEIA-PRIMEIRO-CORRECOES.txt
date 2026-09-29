@@ -1,0 +1,20 @@
+IL CHATS — PACOTE COMPLETO CORRIGIDO
+
+Base: ZIP atual fornecido pelo usuário em 28/09/2026.
+Domínio: https://il-chta.github.io/
+
+Correções incluídas:
+- câmera usando MediaDevices.getUserMedia nativo no bundle atual;
+- cache-bust do bundle da câmera;
+- toque repetido e vibração repetida em chamada recebida;
+- aviso de chamada por notificação, inclusive quando a página está em segundo plano;
+- aviso sonoro/vibração de mensagem quando a página está aberta;
+- Web Push/service worker para mensagens e chamadas;
+- arquivos de histórico de chamadas e recibos de leitura que o index já solicitava, mas não estavam presentes no ZIP;
+- toque de retorno (Chamando…) para quem inicia a ligação.
+
+NÃO ALTERADO:
+- IL Bate Papo;
+- IL Chats Mail.
+
+OBSERVAÇÃO: navegadores exigem que o usuário conceda permissão de notificações. Áudio automático também depende de uma interação prévia do usuário em alguns navegadores.

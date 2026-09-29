@@ -88,17 +88,18 @@
       return;
     }
     document.querySelectorAll(".auth-card,.profile").forEach(function (area) {
-      if (area.querySelector(".il-pwa-install-entry")) return;
-      var button = document.createElement("button");
-      button.type = "button";
-      button.className = "il-pwa-install-entry";
-      button.innerHTML = '<span>📲</span><b>INSTALAR O IL CHATS</b><small>Android, Windows e iPhone</small>';
-      button.addEventListener("click", installNow);
       var reference = area.querySelector(".logout,.demo");
-      if (reference) area.insertBefore(button, reference);
-      else area.appendChild(button);
+      if (!area.querySelector(".il-pwa-install-entry:not(.il-apk-download-entry)")) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "il-pwa-install-entry";
+        button.innerHTML = '<span>📲</span><b>INSTALAR O IL CHATS</b><small>Android, Windows e iPhone</small>';
+        button.addEventListener("click", installNow);
+        if (reference) area.insertBefore(button, reference);
+        else area.appendChild(button);
+      }
 
-      if (isAndroid() && !area.querySelector(".il-apk-download-entry")) {
+      if (!area.querySelector(".il-apk-download-entry")) {
         var apk = document.createElement("a");
         apk.className = "il-pwa-install-entry il-apk-download-entry";
         apk.href = "/downloads/IL-Chats.apk";

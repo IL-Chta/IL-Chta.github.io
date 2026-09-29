@@ -1,4 +1,4 @@
-// IL Bate Papo build corrigido 2026-09-20
+// IL Chats — avisos de mensagens e chamadas
 self.addEventListener("install", function () { self.skipWaiting(); });
 self.addEventListener("activate", function (event) { event.waitUntil(self.clients.claim()); });
 self.addEventListener("message", function (event) {
@@ -27,8 +27,8 @@ self.addEventListener("push", function (event) {
     vibrate: isCall ? [700, 300, 700, 300, 900] : [250, 120, 250],
     data: { url: data.url || "/", type: data.type || "message" },
     actions: isCall ? [
-      { action: "open", title: "Atender" },
-      { action: "dismiss", title: "Recusar" }
+      { action: "open", title: "Abrir chamada" },
+      { action: "dismiss", title: "Fechar aviso" }
     ] : [{ action: "open", title: "Abrir" }]
     });
   }));

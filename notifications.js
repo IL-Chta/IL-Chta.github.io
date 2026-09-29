@@ -42,19 +42,31 @@
     document.body.appendChild(box);
   }
   async function show(title, body, isCall, tag) {
-    if (Notification.permission !== "granted" || !registration || document.visibilityState === "visible") return;
+    if (Notification.permission !== "granted" || !registration) return;
+    if (!isCall && document.visibilityState === "visible") return;
     await registration.showNotification(title, { body: body, icon: "/icon.svg", badge: "/icon.svg", tag: tag, renotify: true, requireInteraction: isCall, vibrate: isCall ? [700,300,700,300,900] : [250,120,250], data: { url: "/", type: isCall ? "call" : "message" } });
   }
   async function senderName(id) { var result = await client().from("profiles").select("display_name").eq("id", id).maybeSingle(); return result.data && result.data.display_name || "Alguém"; }
+  function foregroundMessageAlert() {
+    try {
+      if (navigator.vibrate) navigator.vibrate([180,90,180]);
+      var C = window.AudioContext || window.webkitAudioContext; if (!C) return;
+      var c = window.__ilMessageAudio || (window.__ilMessageAudio = new C());
+      if (c.state === "suspended") c.resume().catch(function(){});
+      var o=c.createOscillator(), g=c.createGain(), now=c.currentTime; o.frequency.value=880;
+      g.gain.setValueAtTime(.0001,now); g.gain.exponentialRampToValueAtTime(.12,now+.015); g.gain.exponentialRampToValueAtTime(.0001,now+.16);
+      o.connect(g).connect(c.destination); o.start(now); o.stop(now+.18);
+    } catch (_) {}
+  }
   async function onMessage(row) {
     if (!user || !row || row.sender_id === user.id || seen.has("m:" + row.id)) return;
     seen.add("m:" + row.id);
-    try { var name = await senderName(row.sender_id); var text = row.content || row.body || row.text || "Você recebeu uma nova mensagem."; await show("Mensagem de " + name, String(text).slice(0,140), false, "message-" + row.id); } catch (error) { logError("mensagem", error); }
+    try { if (document.visibilityState === "visible") foregroundMessageAlert(); var name = await senderName(row.sender_id); var text = row.content || row.body || row.text || "Você recebeu uma nova mensagem."; await show("Mensagem de " + name, String(text).slice(0,140), false, "message-" + row.id); } catch (error) { logError("mensagem", error); }
   }
   async function onCall(row) {
     if (!user || !row || row.recipient_id !== user.id || row.signal_type !== "offer" || seen.has("c:" + row.call_id)) return;
     seen.add("c:" + row.call_id);
-    try { var name = await senderName(row.sender_id); var mode = row.payload && row.payload.mode === "video" ? "vídeo" : "voz"; await show("Chamada de " + mode + " recebida", name + " está ligando para você no IL Chats.", true, "call-" + row.call_id); } catch (error) { logError("chamada", error); }
+    try { if (window.ILChatsRingtone) window.ILChatsRingtone.start(); var name = await senderName(row.sender_id); var mode = row.payload && row.payload.mode === "video" ? "vídeo" : "voz"; await show("Chamada de " + mode + " recebida", name + " está ligando para você no IL Chats.", true, "call-" + row.call_id); } catch (error) { logError("chamada", error); }
   }
   function startRealtime() {
     if (!user || !client()) return;
@@ -73,7 +85,7 @@
   }
   async function start() {
     if (!("serviceWorker" in navigator) || !("Notification" in window) || !("PushManager" in window)) { logError("compatibilidade", "Web Push indisponível"); return; }
-    registration = await navigator.serviceWorker.register("/sw.js?v=6", { updateViaCache:"none" }); await registration.update();
+    registration = await navigator.serviceWorker.register("/sw.js?v=20260928-2", { updateViaCache:"none" }); await registration.update();
     var c = client(); if (!c) throw new Error("Cliente Supabase não encontrado");
     var session = await c.auth.getSession(); await configureForSession(session.data && session.data.session && session.data.session.user);
     c.auth.onAuthStateChange(function (_event, nextSession) { setTimeout(function () { configureForSession(nextSession && nextSession.user).catch(function (error) { logError("sessão", error); }); }, 0); });

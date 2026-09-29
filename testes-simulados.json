@@ -1,0 +1,85 @@
+{
+  "beforeVideo": {
+    "calls": [
+      {
+        "audio": true
+      }
+    ],
+    "status": [
+      "Sua câmera não abriu • recebendo o vídeo da outra pessoa…"
+    ],
+    "videoTracks": 0,
+    "previewAttached": true,
+    "played": 1,
+    "stopped": 0
+  },
+  "afterVideo": {
+    "calls": [
+      {
+        "audio": true,
+        "video": {
+          "deviceId": {
+            "exact": "test-integrated"
+          }
+        }
+      }
+    ],
+    "status": [],
+    "videoTracks": 1,
+    "previewAttached": true,
+    "played": 1,
+    "stopped": 0
+  },
+  "afterFallback": {
+    "calls": [
+      {
+        "audio": true,
+        "video": {
+          "deviceId": {
+            "exact": "test-integrated"
+          }
+        }
+      },
+      {
+        "audio": true,
+        "video": true
+      }
+    ],
+    "status": [
+      "Câmera do computador conectada"
+    ],
+    "videoTracks": 1,
+    "previewAttached": true,
+    "played": 1,
+    "stopped": 0
+  },
+  "afterAudio": {
+    "calls": [
+      {
+        "audio": true,
+        "video": false
+      }
+    ],
+    "status": [],
+    "videoTracks": 0,
+    "previewAttached": true,
+    "played": 1,
+    "stopped": 0
+  },
+  "afterCancelled": {
+    "calls": [
+      {
+        "audio": true,
+        "video": {
+          "deviceId": {
+            "exact": "test-integrated"
+          }
+        }
+      }
+    ],
+    "status": [],
+    "previewAttached": false,
+    "played": 0,
+    "stopped": 2
+  }
+}

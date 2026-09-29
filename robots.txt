@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://il-bate-papo.github.io/sitemap.xml
+
+Sitemap: https://il-chta.github.io/IL-Chat/sitemap.xml

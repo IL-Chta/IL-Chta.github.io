@@ -1,0 +1,10 @@
+CORREÇÃO CANDIDATA — SOMENTE IL CHATS
+Repositório: IL-Chta/IL-Chta.github.io
+Base: 6c4478cb7752bfc4b5c3342e81a85441f9ba2ceb
+Arquivo: index-receber-video-20260906.js
+Alteração: duas chamadas window.ilbpGetUserMedia substituídas por navigator.mediaDevices.getUserMedia. Nenhuma outra alteração.
+Testes simulados: reprodução do defeito anterior, captura de vídeo, prévia, fallback genérico, áudio e cancelamento. Sintaxe validada.
+NÃO VALIDADO: câmera física, chamada ponta a ponta, funções essenciais e deploy /IL-Chat/.
+NÃO PUBLICADO. GitHub retornou 403 ao criar branch.
+Não usar este arquivo no IL Bate Papo. IL Chats Mail fora do escopo.
+
