@@ -1,0 +1,56 @@
+/* IL Chats — patch responsivo teclado estilo WhatsApp — 05/10/2026
+   Acrescentar AO FINAL de assets/index-CtQnR9aj.css.
+   Não substitui nem altera câmera/WebRTC/áudio/chamadas. */
+
+@media (max-width:680px){
+  .app{
+    height:100dvh!important;
+    max-height:100dvh!important;
+    min-height:0!important;
+  }
+
+  .conversation.mobile-open{
+    height:auto!important;
+    max-height:none!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+
+  .messages{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior-y:contain;
+  }
+
+  .composer{
+    position:relative!important;
+    bottom:auto!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    min-width:0!important;
+    z-index:20!important;
+  }
+
+  .composer>input:not(.attachment-file),
+  .composer>textarea{
+    flex:1 1 auto!important;
+    min-width:0!important;
+  }
+
+  .app:has(.conversation.mobile-open .composer input:focus),
+  .app:has(.conversation.mobile-open .composer textarea:focus){
+    padding-bottom:0!important;
+  }
+
+  .app:has(.conversation.mobile-open .composer input:focus) .conversation.mobile-open,
+  .app:has(.conversation.mobile-open .composer textarea:focus) .conversation.mobile-open{
+    inset:0!important;
+  }
+
+  .app:has(.conversation.mobile-open .composer input:focus) .mobile-nav,
+  .app:has(.conversation.mobile-open .composer textarea:focus) .mobile-nav{
+    display:none!important;
+  }
+}
